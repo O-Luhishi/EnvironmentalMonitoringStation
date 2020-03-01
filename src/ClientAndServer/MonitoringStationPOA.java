@@ -5,7 +5,7 @@ package ClientAndServer;
  * Generated from IDL interface "MonitoringStation".
  *
  * @author JacORB IDL compiler V 3.9
- * @version generated at 01-Mar-2020 18:30:36
+ * @version generated at 01-Mar-2020 20:05:26
  */
 
 public abstract class MonitoringStationPOA
@@ -15,9 +15,12 @@ public abstract class MonitoringStationPOA
 	static private final java.util.HashMap<String,Integer> m_opsHash = new java.util.HashMap<String,Integer>();
 	static
 	{
-		m_opsHash.put ( "_set_x", Integer.valueOf(0));
-		m_opsHash.put ( "NoxReading", Integer.valueOf(1));
-		m_opsHash.put ( "_get_x", Integer.valueOf(2));
+		m_opsHash.put ( "_get_station_name", Integer.valueOf(0));
+		m_opsHash.put ( "activate", Integer.valueOf(1));
+		m_opsHash.put ( "deactivate", Integer.valueOf(2));
+		m_opsHash.put ( "get_reading", Integer.valueOf(3));
+		m_opsHash.put ( "reset", Integer.valueOf(4));
+		m_opsHash.put ( "_get_location", Integer.valueOf(5));
 	}
 	private String[] ids = {"IDL:ClientAndServer/MonitoringStation:1.0"};
 	public ClientAndServer.MonitoringStation _this()
@@ -43,23 +46,41 @@ public abstract class MonitoringStationPOA
 			throw new org.omg.CORBA.BAD_OPERATION(method + " not found");
 		switch ( opsIndex.intValue() )
 		{
-			case 0: // _set_x
+			case 0: // _get_station_name
 			{
 			_out = handler.createReply();
-			x(_input.read_string());
-				break;
-			}
-			case 1: // NoxReading
-			{
-				_out = handler.createReply();
-				java.lang.String tmpResult2 = NoxReading();
+			java.lang.String tmpResult2 = station_name();
 _out.write_string( tmpResult2 );
 				break;
 			}
-			case 2: // _get_x
+			case 1: // activate
+			{
+				_out = handler.createReply();
+				activate();
+				break;
+			}
+			case 2: // deactivate
+			{
+				_out = handler.createReply();
+				deactivate();
+				break;
+			}
+			case 3: // get_reading
+			{
+				_out = handler.createReply();
+				ClientAndServer.NoxReadingHelper.write(_out,get_reading());
+				break;
+			}
+			case 4: // reset
+			{
+				_out = handler.createReply();
+				reset();
+				break;
+			}
+			case 5: // _get_location
 			{
 			_out = handler.createReply();
-			java.lang.String tmpResult3 = x();
+			java.lang.String tmpResult3 = location();
 _out.write_string( tmpResult3 );
 				break;
 			}

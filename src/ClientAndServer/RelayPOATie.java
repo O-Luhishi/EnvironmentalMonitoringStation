@@ -6,7 +6,7 @@ import org.omg.PortableServer.POA;
  * Generated from IDL interface "Relay".
  *
  * @author JacORB IDL compiler V 3.9
- * @version generated at 01-Mar-2020 18:30:36
+ * @version generated at 01-Mar-2020 20:05:26
  */
 
 public class RelayPOATie
@@ -52,9 +52,9 @@ public class RelayPOATie
 		}
 		return super._default_POA();
 	}
-	public java.lang.String fetch_message()
+	public java.lang.String fetch_NoxReading()
 	{
-		return _delegate.fetch_message();
+		return _delegate.fetch_NoxReading();
 	}
 
 }

@@ -3,7 +3,7 @@
 
 module ClientAndServer {
     interface Relay {
-        string fetch_message();
+        string fetch_NoxReading();
     };
 
     struct NoxReading{

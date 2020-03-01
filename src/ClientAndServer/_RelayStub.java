@@ -5,7 +5,7 @@ package ClientAndServer;
  * Generated from IDL interface "Relay".
  *
  * @author JacORB IDL compiler V 3.9
- * @version generated at 01-Mar-2020 18:30:36
+ * @version generated at 01-Mar-2020 20:05:26
  */
 
 public class _RelayStub
@@ -21,7 +21,7 @@ public class _RelayStub
 	}
 
 	public final static java.lang.Class _opsClass = ClientAndServer.RelayOperations.class;
-	public java.lang.String fetch_message()
+	public java.lang.String fetch_NoxReading()
 	{
 		while(true)
 		{
@@ -31,7 +31,7 @@ public class _RelayStub
 				org.omg.CORBA.portable.OutputStream _os = null;
 				try
 				{
-					_os = _request( "fetch_message", true);
+					_os = _request( "fetch_NoxReading", true);
 					_is = _invoke(_os);
 					java.lang.String _result = _is.read_string();
 					return _result;
@@ -71,14 +71,14 @@ public class _RelayStub
 		}
 		else
 		{
-			org.omg.CORBA.portable.ServantObject _so = _servant_preinvoke( "fetch_message", _opsClass );
+			org.omg.CORBA.portable.ServantObject _so = _servant_preinvoke( "fetch_NoxReading", _opsClass );
 			if( _so == null )
 				continue;
 			RelayOperations _localServant = (RelayOperations)_so.servant;
 			java.lang.String _result;
 			try
 			{
-				_result = _localServant.fetch_message();
+				_result = _localServant.fetch_NoxReading();
 				if ( _so instanceof org.omg.CORBA.portable.ServantObjectExt) 
 					((org.omg.CORBA.portable.ServantObjectExt)_so).normalCompletion();
 				return _result;

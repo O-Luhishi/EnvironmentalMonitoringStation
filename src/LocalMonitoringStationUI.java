@@ -39,15 +39,20 @@ class LocalMonitoringStation extends RelayPOA {
 		}
 	}
 
-	public String fetch_message() {
-		parent.addMessage("fetch_message called by client.  Calling server..\n");
+	public String fetch_NoxReading() {
+		parent.addMessage("Fetch_NoxReading called by client.  Calling server..\n");
 
-		String messageFromServer = server.NoxReading();
+		NoxReading messageFromServer = server.get_reading();
 
 		parent.addMessage("message from server = " + messageFromServer + "\n"
 				+ "   Now forwarding to client..\n\n");
 
-		return messageFromServer;
+		return noxReading_ToString(messageFromServer);
+	}
+
+	public String noxReading_ToString(NoxReading object){
+		return "Station Name: " + object.station_name + "\n" + "Reading Value: " + object.reading_value + "\n"
+				+ "Date: " + object.date + "\n" + "Time: " + object.time;
 	}
 }
 

@@ -5,7 +5,7 @@ package ClientAndServer;
  * Generated from IDL interface "Relay".
  *
  * @author JacORB IDL compiler V 3.9
- * @version generated at 01-Mar-2020 18:30:36
+ * @version generated at 01-Mar-2020 20:05:26
  */
 
 public abstract class RelayPOA
@@ -15,7 +15,7 @@ public abstract class RelayPOA
 	static private final java.util.HashMap<String,Integer> m_opsHash = new java.util.HashMap<String,Integer>();
 	static
 	{
-		m_opsHash.put ( "fetch_message", Integer.valueOf(0));
+		m_opsHash.put ( "fetch_NoxReading", Integer.valueOf(0));
 	}
 	private String[] ids = {"IDL:ClientAndServer/Relay:1.0"};
 	public ClientAndServer.Relay _this()
@@ -41,10 +41,10 @@ public abstract class RelayPOA
 			throw new org.omg.CORBA.BAD_OPERATION(method + " not found");
 		switch ( opsIndex.intValue() )
 		{
-			case 0: // fetch_message
+			case 0: // fetch_NoxReading
 			{
 				_out = handler.createReply();
-				java.lang.String tmpResult0 = fetch_message();
+				java.lang.String tmpResult0 = fetch_NoxReading();
 _out.write_string( tmpResult0 );
 				break;
 			}

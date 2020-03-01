@@ -40,8 +40,8 @@ public class HeadQuarterUI extends JFrame {
 			getItButton.addActionListener (new ActionListener() {
 				public void actionPerformed (ActionEvent evt) {
 					textarea.append("Calling relay...\n");
-					String result = relay.fetch_message();
-					textarea.append("   Result = " + result + "\n\n");
+					String result = relay.fetch_NoxReading();
+					textarea.append("   Result = \n" + result + "\n\n");
 				}
 			});
 
