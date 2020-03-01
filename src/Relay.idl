@@ -6,9 +6,19 @@ module ClientAndServer {
         string fetch_message();
     };
 
-    interface MonitoringStation {
-	    string NoxReading();
+    struct NoxReading{
+       long time;
+       long date;
+       string station_name;
+       long reading_value;
+    };
 
-	    attribute string x;
+    interface MonitoringStation {
+        readonly attribute string station_name;
+        readonly attribute string location;
+        NoxReading get_reading();
+        void activate();
+        void deactivate();
+        void reset();
     };
 };

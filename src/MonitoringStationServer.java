@@ -8,12 +8,12 @@ import java.io.*;
 import javax.swing.*;
 
 
-class MonitoringStationServer extends MonitoringStationPOA {
-	private MonitoringStationUI parent;
+class MonitoringStationServant extends MonitoringStationPOA {
+	private MonitoringStationServer parent;
 
 	String noxReading;
 
-	MonitoringStationServer(MonitoringStationUI parentGUI) {
+	MonitoringStationServant(MonitoringStationServer parentGUI) {
 		// store reference to parent GUI
 		parent = parentGUI;
 	}
@@ -24,7 +24,7 @@ class MonitoringStationServer extends MonitoringStationPOA {
 	}
 
 	private String get_NoxReading() {
-		noxReading = MonitoringStationUI.get_Reading();
+		noxReading = MonitoringStationServer.get_Reading();
 		return noxReading;
 	}
 
@@ -39,11 +39,11 @@ class MonitoringStationServer extends MonitoringStationPOA {
 	}
 }
 
-public class MonitoringStationUI extends JFrame {
+public class MonitoringStationServer extends JFrame {
 	private JTextArea textarea;
 	public static JTextField txtField;
 
-	public MonitoringStationUI(String[] args){
+	public MonitoringStationServer(String[] args){
 		try {
 			// create and initialize the ORB
 			ORB orb = ORB.init(args, null);
@@ -53,7 +53,7 @@ public class MonitoringStationUI extends JFrame {
 			rootpoa.the_POAManager().activate();
 
 			// create servant and register it with the ORB
-			MonitoringStationServer helloRef = new MonitoringStationServer(this);
+			MonitoringStationServant helloRef = new MonitoringStationServant(this);
 
 			// get the 'stringified IOR'
 			org.omg.CORBA.Object ref = rootpoa.servant_to_reference(helloRef);
@@ -115,7 +115,7 @@ public class MonitoringStationUI extends JFrame {
 		final String[] arguments = args;
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				new MonitoringStationUI(arguments).setVisible(true);
+				new MonitoringStationServer(arguments).setVisible(true);
 			}
 		});
 	}
