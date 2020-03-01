@@ -1,0 +1,9 @@
+asspath
+*.project
+.idea/*
+out/*
+*.zip
+*.jar
+*.iml
+*.all
+.DS_Store
