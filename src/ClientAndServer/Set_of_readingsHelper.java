@@ -4,7 +4,7 @@ package ClientAndServer;
  * Generated from IDL alias "Set_of_readings".
  *
  * @author JacORB IDL compiler V 3.9
- * @version generated at 04-Mar-2020 17:25:02
+ * @version generated at 04-Mar-2020 19:25:35
  */
 
 public abstract class Set_of_readingsHelper

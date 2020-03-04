@@ -10,7 +10,8 @@ import java.io.FileReader;
 class LocalMonitoringStationServant extends LocalMonitoringStationPOA {
 
 	private ORB orb;
-	private ClientAndServer.MonitoringStation server;
+	private ClientAndServer.Sensor server;
+	private ClientAndServer.HeadQuarter hqServer;
 	private LocalMonitoringStationUI parent;
 
 	LocalMonitoringStationServant(LocalMonitoringStationUI parentGUI, ORB orb_val) {
@@ -24,13 +25,23 @@ class LocalMonitoringStationServant extends LocalMonitoringStationPOA {
 		// look up the server
 		try {
 			// read in the 'stringified IOR'
+			BufferedReader input = new BufferedReader(new FileReader("HeadQuarterServer.ref"));
+			String stringified_ior1 = input.readLine();
+
+			// get object reference from stringified IOR
+			org.omg.CORBA.Object server_ref1 =
+					orb.string_to_object(stringified_ior1);
+			hqServer = ClientAndServer.HeadQuarterHelper.narrow(server_ref1);
+
+
+			// read in the 'stringified IOR'
 			BufferedReader in = new BufferedReader(new FileReader("server.ref"));
 			String stringified_ior = in.readLine();
 
 			// get object reference from stringified IOR
 			org.omg.CORBA.Object server_ref =
 					orb.string_to_object(stringified_ior);
-			server = ClientAndServer.MonitoringStationHelper.narrow(server_ref);
+			server = ClientAndServer.SensorHelper.narrow(server_ref);
 		} catch (Exception e) {
 			System.out.println("ERROR : " + e) ;
 			e.printStackTrace(System.out);
@@ -39,12 +50,10 @@ class LocalMonitoringStationServant extends LocalMonitoringStationPOA {
 
 	public String fetch_NoxReading() {
 		parent.addMessage("Fetch_NoxReading called by client.  Calling server..\n");
-
 		NoxReading messageFromServer = server.get_reading();
-
 		parent.addMessage("message from server = " + messageFromServer + "\n"
 				+ "   Now forwarding to client..\n\n");
-
+		System.out.println("RESULT: "+noxReading_ToString(messageFromServer));
 		return noxReading_ToString(messageFromServer);
 	}
 

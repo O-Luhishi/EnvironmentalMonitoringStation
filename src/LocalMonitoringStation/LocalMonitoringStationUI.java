@@ -42,7 +42,7 @@ public class LocalMonitoringStationUI extends JFrame {
 			getContentPane().add(panel, "Center");
 
 			setSize(400, 500);
-			setTitle("LocalMonitoringStationServant.LocalMonitoringStationUI Demo LocalMonitoringStationServant.LocalMonitoringStationUI");
+			setTitle("Local Monitoring Station");
 
 			addWindowListener (new java.awt.event.WindowAdapter () {
 				public void windowClosing (java.awt.event.WindowEvent evt) {
