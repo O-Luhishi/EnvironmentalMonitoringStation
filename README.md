@@ -36,18 +36,18 @@ To run the demo from IntelliJ:
 
 
     cd RelayWithGUIsDemo/src
-    <path_to_jacorb_dir>/bin/idl LocalMonitoringStationUI.idl
+    <path_to_jacorb_dir>/bin/idl LocalMonitoringStation.LocalMonitoringStationUI.idl
 
 e.g. I would type:
 
     cd RelayWithGUIsDemo/src
-    /spare/jacorb-3.9/bin/idl LocalMonitoringStationUI.idl
+    /spare/jacorb-3.9/bin/idl LocalMonitoringStation.LocalMonitoringStationUI.idl
 
 3.  You can then run the different components of the system.  You need to start them in the following order:
 
 
-    MonitoringStationServer
-    LocalMonitoringStationUI
-    HeadQuarterUI
+    Sensor.SensorServer
+    LocalMonitoringStation.LocalMonitoringStationUI
+    HeadQuarter.HeadQuarterUI
 
 

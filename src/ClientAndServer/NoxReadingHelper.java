@@ -5,7 +5,7 @@ package ClientAndServer;
  * Generated from IDL struct "NoxReading".
  *
  * @author JacORB IDL compiler V 3.9
- * @version generated at 01-Mar-2020 20:05:26
+ * @version generated at 04-Mar-2020 17:25:02
  */
 
 public abstract class NoxReadingHelper
@@ -69,8 +69,8 @@ public abstract class NoxReadingHelper
 	{
 		out.write_long(s.time);
 		out.write_long(s.date);
-		java.lang.String tmpResult1 = s.station_name;
-out.write_string( tmpResult1 );
+		java.lang.String tmpResult0 = s.station_name;
+out.write_string( tmpResult0 );
 		out.write_long(s.reading_value);
 	}
 }

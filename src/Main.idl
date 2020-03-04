@@ -1,0 +1,39 @@
+// Example of a "relay" - a client and server.
+// Uses the old favourite Hello World as a basis.
+
+module ClientAndServer {
+    struct NoxReading{
+       long time;
+       long date;
+       string station_name;
+       long reading_value;
+    };
+
+    interface Sensor {
+        readonly attribute string station_name;
+        readonly attribute string location;
+        NoxReading get_reading();
+        void activate();
+        void deactivate();
+        void reset();
+    };
+
+    typedef sequence<NoxReading> Log_of_alarm_readings;
+    typedef sequence<NoxReading> Set_of_readings;
+
+    interface  LocalMonitoringStation {
+        string fetch_NoxReading();
+        readonly attribute string name;
+        readonly attribute string location_name;
+        readonly attribute Log_of_alarm_readings log;
+        void raise_alarm (in NoxReading alarmReading);
+        Set_of_readings take_readings();
+        void add_monitoring_station(in string station_name, in string station_location, in string station_ior);
+    };
+
+    interface HeadQuarter{
+        void raise_alarm(in NoxReading alarm_reading);
+        void register_agency(in string who, in string contact_details, in string area_of_interest);
+        void register_local_server(in string server_name)
+    };
+};

@@ -2,25 +2,25 @@ package ClientAndServer;
 
 
 /**
- * Generated from IDL interface "MonitoringStation".
+ * Generated from IDL interface "Sensor".
  *
  * @author JacORB IDL compiler V 3.9
- * @version generated at 02-Mar-2020 12:45:45
+ * @version generated at 04-Mar-2020 17:25:02
  */
 
-public class _MonitoringStationStub
+public class _SensorStub
 	extends org.omg.CORBA.portable.ObjectImpl
-	implements ClientAndServer.MonitoringStation
+	implements ClientAndServer.Sensor
 {
 	/** Serial version UID. */
 	private static final long serialVersionUID = 1L;
-	private String[] ids = {"IDL:ClientAndServer/MonitoringStation:1.0"};
+	private String[] ids = {"IDL:ClientAndServer/Sensor:1.0"};
 	public String[] _ids()
 	{
 		return ids;
 	}
 
-	public final static java.lang.Class _opsClass = ClientAndServer.MonitoringStationOperations.class;
+	public final static java.lang.Class _opsClass = ClientAndServer.SensorOperations.class;
 	public java.lang.String station_name()
 	{
 		while(true)
@@ -74,7 +74,7 @@ public class _MonitoringStationStub
 				org.omg.CORBA.portable.ServantObject _so = _servant_preinvoke( "_get_station_name", _opsClass);
 				if( _so == null )
 					continue;
-				MonitoringStationOperations _localServant = (MonitoringStationOperations)_so.servant;
+				SensorOperations _localServant = (SensorOperations)_so.servant;
 				java.lang.String _result;
 				try
 				{
@@ -157,7 +157,7 @@ public class _MonitoringStationStub
 			org.omg.CORBA.portable.ServantObject _so = _servant_preinvoke( "activate", _opsClass );
 			if( _so == null )
 				continue;
-			MonitoringStationOperations _localServant = (MonitoringStationOperations)_so.servant;
+			SensorOperations _localServant = (SensorOperations)_so.servant;
 			try
 			{
 				_localServant.activate();
@@ -239,7 +239,7 @@ public class _MonitoringStationStub
 			org.omg.CORBA.portable.ServantObject _so = _servant_preinvoke( "deactivate", _opsClass );
 			if( _so == null )
 				continue;
-			MonitoringStationOperations _localServant = (MonitoringStationOperations)_so.servant;
+			SensorOperations _localServant = (SensorOperations)_so.servant;
 			try
 			{
 				_localServant.deactivate();
@@ -322,7 +322,7 @@ public class _MonitoringStationStub
 			org.omg.CORBA.portable.ServantObject _so = _servant_preinvoke( "get_reading", _opsClass );
 			if( _so == null )
 				continue;
-			MonitoringStationOperations _localServant = (MonitoringStationOperations)_so.servant;
+			SensorOperations _localServant = (SensorOperations)_so.servant;
 			ClientAndServer.NoxReading _result;
 			try
 			{
@@ -405,7 +405,7 @@ public class _MonitoringStationStub
 			org.omg.CORBA.portable.ServantObject _so = _servant_preinvoke( "reset", _opsClass );
 			if( _so == null )
 				continue;
-			MonitoringStationOperations _localServant = (MonitoringStationOperations)_so.servant;
+			SensorOperations _localServant = (SensorOperations)_so.servant;
 			try
 			{
 				_localServant.reset();
@@ -488,7 +488,7 @@ public class _MonitoringStationStub
 				org.omg.CORBA.portable.ServantObject _so = _servant_preinvoke( "_get_location", _opsClass);
 				if( _so == null )
 					continue;
-				MonitoringStationOperations _localServant = (MonitoringStationOperations)_so.servant;
+				SensorOperations _localServant = (SensorOperations)_so.servant;
 				java.lang.String _result;
 				try
 				{

@@ -1,3 +1,5 @@
+package HeadQuarter;
+
 import org.omg.CORBA.ORB;
 
 import javax.swing.*;
@@ -18,7 +20,7 @@ public class HeadQuarterUI extends JFrame {
 			// create and initialize the ORB
 			ORB orb = ORB.init(args, null);
 
-			// read in the 'stringified IOR' of the LocalMonitoringStationUI
+			// read in the 'stringified IOR' of the LocalMonitoringStation.LocalMonitoringStationUI
 			BufferedReader in = new BufferedReader(new FileReader("relay.ref"));
 			String stringified_ior = in.readLine();
 
@@ -26,8 +28,8 @@ public class HeadQuarterUI extends JFrame {
 			org.omg.CORBA.Object server_ref =
 					orb.string_to_object(stringified_ior);
 
-			final ClientAndServer.Relay relay =
-					ClientAndServer.RelayHelper.narrow(server_ref);
+			final ClientAndServer.LocalMonitoringStation lms =
+					ClientAndServer.LocalMonitoringStationHelper.narrow(server_ref);
 
 
 			// set up the GUI
@@ -36,11 +38,11 @@ public class HeadQuarterUI extends JFrame {
 			JPanel textpanel = new JPanel();
 
 			JPanel buttonpanel = new JPanel();
-			JButton getItButton = new JButton("Call LocalMonitoringStationUI");
+			JButton getItButton = new JButton("Call LocalMonitoringStation.LocalMonitoringStationUI");
 			getItButton.addActionListener (new ActionListener() {
 				public void actionPerformed (ActionEvent evt) {
 					textarea.append("Calling relay...\n");
-					String result = relay.fetch_NoxReading();
+					String result = lms.fetch_NoxReading();
 					textarea.append("   Result = \n" + result + "\n\n");
 				}
 			});
@@ -53,7 +55,7 @@ public class HeadQuarterUI extends JFrame {
 			getContentPane().add(buttonpanel, "South");
 
 			setSize(400, 500);
-			setTitle("LocalMonitoringStationUI Demo Client");
+			setTitle("LocalMonitoringStation.LocalMonitoringStationUI Demo Client");
 
 			addWindowListener (new WindowAdapter () {
 				public void windowClosing (WindowEvent evt) {

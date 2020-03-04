@@ -3,44 +3,44 @@ package ClientAndServer;
 import org.omg.PortableServer.POA;
 
 /**
- * Generated from IDL interface "MonitoringStation".
+ * Generated from IDL interface "Sensor".
  *
  * @author JacORB IDL compiler V 3.9
- * @version generated at 02-Mar-2020 12:45:45
+ * @version generated at 04-Mar-2020 17:25:02
  */
 
-public class MonitoringStationPOATie
-	extends MonitoringStationPOA
+public class SensorPOATie
+	extends SensorPOA
 {
-	private MonitoringStationOperations _delegate;
+	private SensorOperations _delegate;
 
 	private POA _poa;
-	public MonitoringStationPOATie(MonitoringStationOperations delegate)
+	public SensorPOATie(SensorOperations delegate)
 	{
 		_delegate = delegate;
 	}
-	public MonitoringStationPOATie(MonitoringStationOperations delegate, POA poa)
+	public SensorPOATie(SensorOperations delegate, POA poa)
 	{
 		_delegate = delegate;
 		_poa = poa;
 	}
-	public ClientAndServer.MonitoringStation _this()
+	public ClientAndServer.Sensor _this()
 	{
 		org.omg.CORBA.Object __o = _this_object() ;
-		ClientAndServer.MonitoringStation __r = ClientAndServer.MonitoringStationHelper.narrow(__o);
+		ClientAndServer.Sensor __r = ClientAndServer.SensorHelper.narrow(__o);
 		return __r;
 	}
-	public ClientAndServer.MonitoringStation _this(org.omg.CORBA.ORB orb)
+	public ClientAndServer.Sensor _this(org.omg.CORBA.ORB orb)
 	{
 		org.omg.CORBA.Object __o = _this_object(orb) ;
-		ClientAndServer.MonitoringStation __r = ClientAndServer.MonitoringStationHelper.narrow(__o);
+		ClientAndServer.Sensor __r = ClientAndServer.SensorHelper.narrow(__o);
 		return __r;
 	}
-	public MonitoringStationOperations _delegate()
+	public SensorOperations _delegate()
 	{
 		return _delegate;
 	}
-	public void _delegate(MonitoringStationOperations delegate)
+	public void _delegate(SensorOperations delegate)
 	{
 		_delegate = delegate;
 	}

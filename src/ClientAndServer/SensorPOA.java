@@ -2,15 +2,15 @@ package ClientAndServer;
 
 
 /**
- * Generated from IDL interface "MonitoringStation".
+ * Generated from IDL interface "Sensor".
  *
  * @author JacORB IDL compiler V 3.9
- * @version generated at 02-Mar-2020 12:45:45
+ * @version generated at 04-Mar-2020 17:25:02
  */
 
-public abstract class MonitoringStationPOA
+public abstract class SensorPOA
 	extends org.omg.PortableServer.Servant
-	implements org.omg.CORBA.portable.InvokeHandler, ClientAndServer.MonitoringStationOperations
+	implements org.omg.CORBA.portable.InvokeHandler, ClientAndServer.SensorOperations
 {
 	static private final java.util.HashMap<String,Integer> m_opsHash = new java.util.HashMap<String,Integer>();
 	static
@@ -22,17 +22,17 @@ public abstract class MonitoringStationPOA
 		m_opsHash.put ( "reset", Integer.valueOf(4));
 		m_opsHash.put ( "_get_location", Integer.valueOf(5));
 	}
-	private String[] ids = {"IDL:ClientAndServer/MonitoringStation:1.0"};
-	public ClientAndServer.MonitoringStation _this()
+	private String[] ids = {"IDL:ClientAndServer/Sensor:1.0"};
+	public ClientAndServer.Sensor _this()
 	{
 		org.omg.CORBA.Object __o = _this_object() ;
-		ClientAndServer.MonitoringStation __r = ClientAndServer.MonitoringStationHelper.narrow(__o);
+		ClientAndServer.Sensor __r = ClientAndServer.SensorHelper.narrow(__o);
 		return __r;
 	}
-	public ClientAndServer.MonitoringStation _this(org.omg.CORBA.ORB orb)
+	public ClientAndServer.Sensor _this(org.omg.CORBA.ORB orb)
 	{
 		org.omg.CORBA.Object __o = _this_object(orb) ;
-		ClientAndServer.MonitoringStation __r = ClientAndServer.MonitoringStationHelper.narrow(__o);
+		ClientAndServer.Sensor __r = ClientAndServer.SensorHelper.narrow(__o);
 		return __r;
 	}
 	public org.omg.CORBA.portable.OutputStream _invoke(String method, org.omg.CORBA.portable.InputStream _input, org.omg.CORBA.portable.ResponseHandler handler)

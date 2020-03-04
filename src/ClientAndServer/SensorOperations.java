@@ -2,13 +2,13 @@ package ClientAndServer;
 
 
 /**
- * Generated from IDL interface "MonitoringStation".
+ * Generated from IDL interface "Sensor".
  *
  * @author JacORB IDL compiler V 3.9
- * @version generated at 02-Mar-2020 12:45:45
+ * @version generated at 04-Mar-2020 17:25:02
  */
 
-public interface MonitoringStationOperations
+public interface SensorOperations
 {
 	/* constants */
 	/* operations  */

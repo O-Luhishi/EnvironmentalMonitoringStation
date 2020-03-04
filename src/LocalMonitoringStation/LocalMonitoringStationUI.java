@@ -1,4 +1,4 @@
-import ClientAndServer.*;
+package LocalMonitoringStation;
 
 import org.omg.PortableServer.*;
 import org.omg.PortableServer.POA;
@@ -6,55 +6,6 @@ import org.omg.CORBA.*;
 
 import java.io.*;
 import javax.swing.*;
-
-
-
-class LocalMonitoringStation extends RelayPOA {
-
-	private ORB orb;
-	private ClientAndServer.MonitoringStation server;
-	private LocalMonitoringStationUI parent;
-
-	LocalMonitoringStation(LocalMonitoringStationUI parentGUI, ORB orb_val) {
-		// store reference to parent GUI
-		parent = parentGUI;
-
-		// store reference to ORB
-		orb = orb_val;
-
-
-		// look up the server
-		try {
-			// read in the 'stringified IOR'
-			BufferedReader in = new BufferedReader(new FileReader("server.ref"));
-			String stringified_ior = in.readLine();
-
-			// get object reference from stringified IOR
-			org.omg.CORBA.Object server_ref =
-					orb.string_to_object(stringified_ior);
-			server = ClientAndServer.MonitoringStationHelper.narrow(server_ref);
-		} catch (Exception e) {
-			System.out.println("ERROR : " + e) ;
-			e.printStackTrace(System.out);
-		}
-	}
-
-	public String fetch_NoxReading() {
-		parent.addMessage("Fetch_NoxReading called by client.  Calling server..\n");
-
-		NoxReading messageFromServer = server.get_reading();
-
-		parent.addMessage("message from server = " + messageFromServer + "\n"
-				+ "   Now forwarding to client..\n\n");
-
-		return noxReading_ToString(messageFromServer);
-	}
-
-	public String noxReading_ToString(NoxReading object){
-		return "Station Name: " + object.station_name + "\n" + "Reading Value: " + object.reading_value + "\n"
-				+ "Date: " + object.date + "\n" + "Time: " + object.time;
-	}
-}
 
 
 public class LocalMonitoringStationUI extends JFrame {
@@ -70,7 +21,7 @@ public class LocalMonitoringStationUI extends JFrame {
 			rootpoa.the_POAManager().activate();
 
 			// create servant and register it with the ORB
-			LocalMonitoringStation relayRef = new LocalMonitoringStation(this, orb);
+			LocalMonitoringStationServant relayRef = new LocalMonitoringStationServant(this, orb);
 
 			// Get the 'stringified IOR'
 			org.omg.CORBA.Object ref = rootpoa.servant_to_reference(relayRef);
@@ -91,7 +42,7 @@ public class LocalMonitoringStationUI extends JFrame {
 			getContentPane().add(panel, "Center");
 
 			setSize(400, 500);
-			setTitle("LocalMonitoringStationUI Demo LocalMonitoringStationUI");
+			setTitle("LocalMonitoringStationServant.LocalMonitoringStationUI Demo LocalMonitoringStationServant.LocalMonitoringStationUI");
 
 			addWindowListener (new java.awt.event.WindowAdapter () {
 				public void windowClosing (java.awt.event.WindowEvent evt) {
@@ -101,7 +52,7 @@ public class LocalMonitoringStationUI extends JFrame {
 
 
 			// wait for invocations from clients
-			textarea.append("LocalMonitoringStationUI started.  Waiting for clients...\n\n");
+			textarea.append("LocalMonitoringStationServant.LocalMonitoringStationUI started.  Waiting for clients...\n\n");
 
 			// remove the "orb.run()" command,
 			// or the server will run but the GUI will not be visible

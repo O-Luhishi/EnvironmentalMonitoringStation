@@ -1,4 +1,4 @@
-import ClientAndServer.*;
+package Sensor;
 
 import org.omg.CORBA.*;
 import org.omg.PortableServer.*;
@@ -10,52 +10,7 @@ import java.io.*;
 import javax.swing.*;
 
 
-class MonitoringStationServant extends MonitoringStationPOA {
-    private MonitoringStationServer parent;
-
-    MonitoringStationServant(MonitoringStationServer parentGUI) {
-        // store reference to parent GUI
-        parent = parentGUI;
-    }
-
-    @Override
-    public String station_name() {
-        return null;
-    }
-
-    @Override
-    public String location() {
-        return null;
-    }
-
-    @Override
-    public NoxReading get_reading() {
-        parent.addMessage("Get_NoxReading called by HQ.\n    Replying with STRUCT message...\n\n");
-        NoxReading NoxReadings = new NoxReading();
-        NoxReadings.time = MonitoringStationServer.time;
-        NoxReadings.date = MonitoringStationServer.date;
-        NoxReadings.station_name = MonitoringStationServer.stationName;
-        NoxReadings.reading_value = MonitoringStationServer.readingValue;
-        return NoxReadings;
-    }
-
-    @Override
-    public void activate() {
-
-    }
-
-    @Override
-    public void deactivate() {
-
-    }
-
-    @Override
-    public void reset() {
-
-    }
-}
-
-public class MonitoringStationServer extends JFrame {
+public class SensorServer extends JFrame {
     private JTextArea textarea;
 
     public static String stationName;
@@ -68,7 +23,7 @@ public class MonitoringStationServer extends JFrame {
     public static JTextField txtReadingValue;
     public static JTextField txtDate;
 
-    public MonitoringStationServer(String[] args) {
+    public SensorServer(String[] args) {
         try {
             // create and initialize the ORB
             ORB orb = ORB.init(args, null);
@@ -78,7 +33,7 @@ public class MonitoringStationServer extends JFrame {
             rootpoa.the_POAManager().activate();
 
             // create servant and register it with the ORB
-            MonitoringStationServant helloRef = new MonitoringStationServant(this);
+            SensorServant helloRef = new SensorServant(this);
 
             // get the 'stringified IOR'
             org.omg.CORBA.Object ref = rootpoa.servant_to_reference(helloRef);
@@ -139,7 +94,7 @@ public class MonitoringStationServer extends JFrame {
             panell.add(btnSaveReadings);
 
             setSize(400, 524);
-            setTitle("MonitoringStationServer");
+            setTitle("Sensor.SensorServer");
 
             addWindowListener(new java.awt.event.WindowAdapter() {
                 public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -173,7 +128,7 @@ public class MonitoringStationServer extends JFrame {
         final String[] arguments = args;
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MonitoringStationServer(arguments).setVisible(true);
+                new SensorServer(arguments).setVisible(true);
             }
         });
     }
