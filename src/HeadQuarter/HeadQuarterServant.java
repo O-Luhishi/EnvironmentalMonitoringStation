@@ -9,18 +9,18 @@ import java.io.FileReader;
 
 public class HeadQuarterServant extends HeadQuarterPOA {
 
-    private HeadQuarterUI parent;
-    private ORB orb;
-    private ClientAndServer.LocalMonitoringStation server;
+    public HeadQuarterUI parent;
+    public ORB orb;
+    public ClientAndServer.LocalMonitoringStation server;
 
     HeadQuarterServant(HeadQuarterUI parentGUI, ORB orb_val) {
         // store reference to parent GUI
         parent = parentGUI;
-
         // store reference to ORB
         orb = orb_val;
-
-
+    }
+    @Override
+    public void connectLMS(){
         // look up the server
         try {
             // read in the 'stringified IOR'
@@ -39,12 +39,14 @@ public class HeadQuarterServant extends HeadQuarterPOA {
 
     @Override
     public String getNox(){
+        connectLMS();
         return server.fetch_NoxReading();
     }
 
     @Override
     public void raise_alarm(NoxReading alarm_reading) {
-
+        System.out.println(noxReading_ToString(alarm_reading));
+        parent.thing = (noxReading_ToString(alarm_reading));
     }
 
     @Override
@@ -55,5 +57,10 @@ public class HeadQuarterServant extends HeadQuarterPOA {
     @Override
     public void register_local_server(String server_name) {
 
+    }
+    @Override
+    public String noxReading_ToString(NoxReading reading){
+        return "Station Name: " + reading.station_name + "\n" + "Reading Value: " + reading.reading_value + "\n"
+                + "Date: " + reading.date + "\n" + "Time: " + reading.time;
     }
 }

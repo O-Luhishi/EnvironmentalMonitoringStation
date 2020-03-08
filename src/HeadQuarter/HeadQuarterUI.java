@@ -9,14 +9,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileReader;
 import java.io.FileWriter;
 
 
 public class HeadQuarterUI extends JFrame {
 	private JTextArea textarea;
+	public String thing;
+
+	public ClientAndServer.HeadQuarter headQuarter;
 
 	public HeadQuarterUI(String[] args) {
 		try {
@@ -43,8 +44,7 @@ public class HeadQuarterUI extends JFrame {
 			System.out.println("Server started.  Waiting for clients...");
 			//orb.run();
 
-			final ClientAndServer.HeadQuarter lms =
-					ClientAndServer.HeadQuarterHelper.narrow(ref);
+			headQuarter = ClientAndServer.HeadQuarterHelper.narrow(ref);
 
 
 			// set up the GUI
@@ -59,13 +59,12 @@ public class HeadQuarterUI extends JFrame {
 //					textarea.append("Calling relay...\n");
 //					String result = lms.fetch_NoxReading();
 //					textarea.append("   Result = \n" + result + "\n\n");
-					String result = lms.getNox();
+					String result = headQuarter.getNox();
 					System.out.println("Result: "+ result);
 					textarea.append("Result: "+ result);
 				}
 			});
-
-
+			textarea.append(thing);
 			textpanel.add(scrollpane);
 			buttonpanel.add(getItButton);
 
@@ -73,7 +72,7 @@ public class HeadQuarterUI extends JFrame {
 			getContentPane().add(buttonpanel, "South");
 
 			setSize(400, 500);
-			setTitle("LocalMonitoringStation.LocalMonitoringStationUI Demo Client");
+			setTitle("HeadQuarter Station");
 
 			addWindowListener (new WindowAdapter () {
 				public void windowClosing (WindowEvent evt) {
@@ -81,7 +80,7 @@ public class HeadQuarterUI extends JFrame {
 				}
 			} );
 
-			textarea.append("Client started.  Click the button to contact relay...\n\n");
+			textarea.append("Server started.  Click the button to contact LMS...\n\n");
 
 		} catch (Exception e) {
 			System.out.println("ERROR : " + e) ;

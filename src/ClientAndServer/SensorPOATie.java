@@ -6,7 +6,7 @@ import org.omg.PortableServer.POA;
  * Generated from IDL interface "Sensor".
  *
  * @author JacORB IDL compiler V 3.9
- * @version generated at 04-Mar-2020 19:25:35
+ * @version generated at 08-Mar-2020 16:46:37
  */
 
 public class SensorPOATie
@@ -55,6 +55,16 @@ public class SensorPOATie
 	public java.lang.String station_name()
 	{
 		return _delegate.station_name();
+	}
+
+	public void connectLMS()
+	{
+_delegate.connectLMS();
+	}
+
+	public void raise_alarm(ClientAndServer.NoxReading reading)
+	{
+_delegate.raise_alarm(reading);
 	}
 
 	public void activate()

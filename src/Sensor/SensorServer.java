@@ -1,5 +1,6 @@
 package Sensor;
 
+import ClientAndServer.NoxReading;
 import org.omg.CORBA.*;
 import org.omg.PortableServer.*;
 import org.omg.PortableServer.POA;
@@ -23,20 +24,23 @@ public class SensorServer extends JFrame {
     public static JTextField txtReadingValue;
     public static JTextField txtDate;
 
+    public ORB orb;
+
+    public SensorServant sensorRef;
+
     public SensorServer(String[] args) {
         try {
             // create and initialize the ORB
-            ORB orb = ORB.init(args, null);
+            orb = ORB.init(args, null);
 
             // get reference to rootpoa & activate the POAManager
             POA rootpoa = POAHelper.narrow(orb.resolve_initial_references("RootPOA"));
             rootpoa.the_POAManager().activate();
 
             // create servant and register it with the ORB
-            SensorServant helloRef = new SensorServant(this);
-
+            sensorRef = new SensorServant(this, orb);
             // get the 'stringified IOR'
-            org.omg.CORBA.Object ref = rootpoa.servant_to_reference(helloRef);
+            org.omg.CORBA.Object ref = rootpoa.servant_to_reference(sensorRef);
             String stringified_ior = orb.object_to_string(ref);
 
             // Save IOR to file
@@ -111,7 +115,6 @@ public class SensorServer extends JFrame {
         }
     }
 
-
     void addMessage(String message) {
         textarea.append(message);
     }
@@ -121,6 +124,9 @@ public class SensorServer extends JFrame {
         readingValue = Integer.parseInt(txtReadingValue.getText());
         date = Integer.parseInt(txtDate.getText());
         time = Integer.parseInt(txtTime.getText());
+        if (readingValue >= 50){
+            sensorRef.raise_alarm(sensorRef.get_reading());
+        }
     }
 
 

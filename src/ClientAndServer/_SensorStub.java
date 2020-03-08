@@ -5,7 +5,7 @@ package ClientAndServer;
  * Generated from IDL interface "Sensor".
  *
  * @author JacORB IDL compiler V 3.9
- * @version generated at 04-Mar-2020 19:25:35
+ * @version generated at 08-Mar-2020 16:46:37
  */
 
 public class _SensorStub
@@ -100,6 +100,171 @@ public class _SensorStub
 					_servant_postinvoke(_so);
 				}
 			}
+
+		}
+
+	}
+
+	public void connectLMS()
+	{
+		while(true)
+		{
+			if(! this._is_local())
+			{
+				org.omg.CORBA.portable.InputStream _is = null;
+				org.omg.CORBA.portable.OutputStream _os = null;
+				try
+				{
+					_os = _request( "connectLMS", true);
+					_is = _invoke(_os);
+					return;
+				}
+				catch( org.omg.CORBA.portable.RemarshalException _rx )
+					{
+						continue;
+					}
+				catch( org.omg.CORBA.portable.ApplicationException _ax )
+				{
+					String _id = _ax.getId();
+					try
+					{
+							_ax.getInputStream().close();
+					}
+					catch (java.io.IOException e)
+					{
+						throw new RuntimeException("Unexpected exception " + e.toString() );
+					}
+					throw new RuntimeException("Unexpected exception " + _id );
+			}
+			finally
+			{
+				if (_os != null)
+				{
+					try
+					{
+						_os.close();
+					}
+					catch (java.io.IOException e)
+					{
+						throw new RuntimeException("Unexpected exception " + e.toString() );
+					}
+				}
+				this._releaseReply(_is);
+			}
+		}
+		else
+		{
+			org.omg.CORBA.portable.ServantObject _so = _servant_preinvoke( "connectLMS", _opsClass );
+			if( _so == null )
+				continue;
+			SensorOperations _localServant = (SensorOperations)_so.servant;
+			try
+			{
+				_localServant.connectLMS();
+				if ( _so instanceof org.omg.CORBA.portable.ServantObjectExt) 
+					((org.omg.CORBA.portable.ServantObjectExt)_so).normalCompletion();
+				return;
+			}
+			catch (RuntimeException re) 
+			{
+				if ( _so instanceof org.omg.CORBA.portable.ServantObjectExt) 
+					((org.omg.CORBA.portable.ServantObjectExt)_so).exceptionalCompletion(re);
+				throw re;
+			}
+			catch (java.lang.Error err) 
+			{
+				if ( _so instanceof org.omg.CORBA.portable.ServantObjectExt) 
+					((org.omg.CORBA.portable.ServantObjectExt)_so).exceptionalCompletion(err);
+				throw err;
+			}
+			finally
+			{
+				_servant_postinvoke(_so);
+			}
+		}
+
+		}
+
+	}
+
+	public void raise_alarm(ClientAndServer.NoxReading reading)
+	{
+		while(true)
+		{
+			if(! this._is_local())
+			{
+				org.omg.CORBA.portable.InputStream _is = null;
+				org.omg.CORBA.portable.OutputStream _os = null;
+				try
+				{
+					_os = _request( "raise_alarm", true);
+					ClientAndServer.NoxReadingHelper.write(_os,reading);
+					_is = _invoke(_os);
+					return;
+				}
+				catch( org.omg.CORBA.portable.RemarshalException _rx )
+					{
+						continue;
+					}
+				catch( org.omg.CORBA.portable.ApplicationException _ax )
+				{
+					String _id = _ax.getId();
+					try
+					{
+							_ax.getInputStream().close();
+					}
+					catch (java.io.IOException e)
+					{
+						throw new RuntimeException("Unexpected exception " + e.toString() );
+					}
+					throw new RuntimeException("Unexpected exception " + _id );
+			}
+			finally
+			{
+				if (_os != null)
+				{
+					try
+					{
+						_os.close();
+					}
+					catch (java.io.IOException e)
+					{
+						throw new RuntimeException("Unexpected exception " + e.toString() );
+					}
+				}
+				this._releaseReply(_is);
+			}
+		}
+		else
+		{
+			org.omg.CORBA.portable.ServantObject _so = _servant_preinvoke( "raise_alarm", _opsClass );
+			if( _so == null )
+				continue;
+			SensorOperations _localServant = (SensorOperations)_so.servant;
+			try
+			{
+				_localServant.raise_alarm(reading);
+				if ( _so instanceof org.omg.CORBA.portable.ServantObjectExt) 
+					((org.omg.CORBA.portable.ServantObjectExt)_so).normalCompletion();
+				return;
+			}
+			catch (RuntimeException re) 
+			{
+				if ( _so instanceof org.omg.CORBA.portable.ServantObjectExt) 
+					((org.omg.CORBA.portable.ServantObjectExt)_so).exceptionalCompletion(re);
+				throw re;
+			}
+			catch (java.lang.Error err) 
+			{
+				if ( _so instanceof org.omg.CORBA.portable.ServantObjectExt) 
+					((org.omg.CORBA.portable.ServantObjectExt)_so).exceptionalCompletion(err);
+				throw err;
+			}
+			finally
+			{
+				_servant_postinvoke(_so);
+			}
+		}
 
 		}
 

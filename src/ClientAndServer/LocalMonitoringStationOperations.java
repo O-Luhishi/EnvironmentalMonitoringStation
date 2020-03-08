@@ -5,7 +5,7 @@ package ClientAndServer;
  * Generated from IDL interface "LocalMonitoringStation".
  *
  * @author JacORB IDL compiler V 3.9
- * @version generated at 04-Mar-2020 19:25:35
+ * @version generated at 08-Mar-2020 16:46:37
  */
 
 public interface LocalMonitoringStationOperations
@@ -19,4 +19,6 @@ public interface LocalMonitoringStationOperations
 	void raise_alarm(ClientAndServer.NoxReading alarmReading);
 	ClientAndServer.NoxReading[] take_readings();
 	void add_monitoring_station(java.lang.String station_name, java.lang.String station_location, java.lang.String station_ior);
+	void connectSensor();
+	void connectHQ();
 }

@@ -17,38 +17,13 @@ class LocalMonitoringStationServant extends LocalMonitoringStationPOA {
 	LocalMonitoringStationServant(LocalMonitoringStationUI parentGUI, ORB orb_val) {
 		// store reference to parent GUI
 		parent = parentGUI;
-
 		// store reference to ORB
 		orb = orb_val;
-
-
-		// look up the server
-		try {
-			// read in the 'stringified IOR'
-			BufferedReader input = new BufferedReader(new FileReader("HeadQuarterServer.ref"));
-			String stringified_ior1 = input.readLine();
-
-			// get object reference from stringified IOR
-			org.omg.CORBA.Object server_ref1 =
-					orb.string_to_object(stringified_ior1);
-			hqServer = ClientAndServer.HeadQuarterHelper.narrow(server_ref1);
-
-
-			// read in the 'stringified IOR'
-			BufferedReader in = new BufferedReader(new FileReader("server.ref"));
-			String stringified_ior = in.readLine();
-
-			// get object reference from stringified IOR
-			org.omg.CORBA.Object server_ref =
-					orb.string_to_object(stringified_ior);
-			server = ClientAndServer.SensorHelper.narrow(server_ref);
-		} catch (Exception e) {
-			System.out.println("ERROR : " + e) ;
-			e.printStackTrace(System.out);
-		}
 	}
 
+	@Override
 	public String fetch_NoxReading() {
+		connectSensor();
 		parent.addMessage("Fetch_NoxReading called by client.  Calling server..\n");
 		NoxReading messageFromServer = server.get_reading();
 		parent.addMessage("message from server = " + messageFromServer + "\n"
@@ -74,7 +49,9 @@ class LocalMonitoringStationServant extends LocalMonitoringStationPOA {
 
 	@Override
 	public void raise_alarm(NoxReading alarmReading) {
-
+		System.out.println(noxReading_ToString(alarmReading));
+		connectHQ();
+		hqServer.raise_alarm(alarmReading);
 	}
 
 	@Override
@@ -90,5 +67,40 @@ class LocalMonitoringStationServant extends LocalMonitoringStationPOA {
 	public String noxReading_ToString(NoxReading object){
 		return "Station Name: " + object.station_name + "\n" + "Reading Value: " + object.reading_value + "\n"
 				+ "Date: " + object.date + "\n" + "Time: " + object.time;
+	}
+
+	@Override
+	public void connectSensor(){
+		// look up the server
+		try {
+			// read in the 'stringified IOR'
+			BufferedReader in = new BufferedReader(new FileReader("server.ref"));
+			String stringified_ior = in.readLine();
+
+			// get object reference from stringified IOR
+			org.omg.CORBA.Object server_ref =
+					orb.string_to_object(stringified_ior);
+			server = ClientAndServer.SensorHelper.narrow(server_ref);
+		} catch (Exception e) {
+			System.out.println("ERROR : " + e) ;
+			e.printStackTrace(System.out);
+		}
+	}
+
+	@Override
+	public void connectHQ(){
+		try {
+			// read in the 'stringified IOR'
+			BufferedReader input = new BufferedReader(new FileReader("HeadQuarterServer.ref"));
+			String stringified_ior1 = input.readLine();
+
+			// get object reference from stringified IOR
+			org.omg.CORBA.Object server_ref1 =
+					orb.string_to_object(stringified_ior1);
+			hqServer = ClientAndServer.HeadQuarterHelper.narrow(server_ref1);
+		}catch(Exception e) {
+			System.out.println("ERROR : " + e) ;
+			e.printStackTrace(System.out);
+		}
 	}
 }

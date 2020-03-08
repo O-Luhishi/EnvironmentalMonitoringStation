@@ -5,7 +5,7 @@ package ClientAndServer;
  * Generated from IDL interface "HeadQuarter".
  *
  * @author JacORB IDL compiler V 3.9
- * @version generated at 04-Mar-2020 19:25:35
+ * @version generated at 08-Mar-2020 16:46:37
  */
 
 public abstract class HeadQuarterPOA
@@ -16,9 +16,11 @@ public abstract class HeadQuarterPOA
 	static
 	{
 		m_opsHash.put ( "getNox", Integer.valueOf(0));
-		m_opsHash.put ( "raise_alarm", Integer.valueOf(1));
-		m_opsHash.put ( "register_local_server", Integer.valueOf(2));
-		m_opsHash.put ( "register_agency", Integer.valueOf(3));
+		m_opsHash.put ( "connectLMS", Integer.valueOf(1));
+		m_opsHash.put ( "raise_alarm", Integer.valueOf(2));
+		m_opsHash.put ( "noxReading_ToString", Integer.valueOf(3));
+		m_opsHash.put ( "register_local_server", Integer.valueOf(4));
+		m_opsHash.put ( "register_agency", Integer.valueOf(5));
 	}
 	private String[] ids = {"IDL:ClientAndServer/HeadQuarter:1.0"};
 	public ClientAndServer.HeadQuarter _this()
@@ -51,21 +53,35 @@ public abstract class HeadQuarterPOA
 _out.write_string( tmpResult13 );
 				break;
 			}
-			case 1: // raise_alarm
+			case 1: // connectLMS
+			{
+				_out = handler.createReply();
+				connectLMS();
+				break;
+			}
+			case 2: // raise_alarm
 			{
 				ClientAndServer.NoxReading _arg0=ClientAndServer.NoxReadingHelper.read(_input);
 				_out = handler.createReply();
 				raise_alarm(_arg0);
 				break;
 			}
-			case 2: // register_local_server
+			case 3: // noxReading_ToString
+			{
+				ClientAndServer.NoxReading _arg0=ClientAndServer.NoxReadingHelper.read(_input);
+				_out = handler.createReply();
+				java.lang.String tmpResult14 = noxReading_ToString(_arg0);
+_out.write_string( tmpResult14 );
+				break;
+			}
+			case 4: // register_local_server
 			{
 				java.lang.String _arg0=_input.read_string();
 				_out = handler.createReply();
 				register_local_server(_arg0);
 				break;
 			}
-			case 3: // register_agency
+			case 5: // register_agency
 			{
 				java.lang.String _arg0=_input.read_string();
 				java.lang.String _arg1=_input.read_string();

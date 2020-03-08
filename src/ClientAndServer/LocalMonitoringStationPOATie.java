@@ -6,7 +6,7 @@ import org.omg.PortableServer.POA;
  * Generated from IDL interface "LocalMonitoringStation".
  *
  * @author JacORB IDL compiler V 3.9
- * @version generated at 04-Mar-2020 19:25:35
+ * @version generated at 08-Mar-2020 16:46:37
  */
 
 public class LocalMonitoringStationPOATie
@@ -52,14 +52,14 @@ public class LocalMonitoringStationPOATie
 		}
 		return super._default_POA();
 	}
-	public java.lang.String fetch_NoxReading()
-	{
-		return _delegate.fetch_NoxReading();
-	}
-
 	public java.lang.String name()
 	{
 		return _delegate.name();
+	}
+
+	public ClientAndServer.NoxReading[] log()
+	{
+		return _delegate.log();
 	}
 
 	public void raise_alarm(ClientAndServer.NoxReading alarmReading)
@@ -67,14 +67,24 @@ public class LocalMonitoringStationPOATie
 _delegate.raise_alarm(alarmReading);
 	}
 
-	public java.lang.String location_name()
-	{
-		return _delegate.location_name();
-	}
-
 	public void add_monitoring_station(java.lang.String station_name, java.lang.String station_location, java.lang.String station_ior)
 	{
 _delegate.add_monitoring_station(station_name,station_location,station_ior);
+	}
+
+	public java.lang.String fetch_NoxReading()
+	{
+		return _delegate.fetch_NoxReading();
+	}
+
+	public void connectHQ()
+	{
+_delegate.connectHQ();
+	}
+
+	public void connectSensor()
+	{
+_delegate.connectSensor();
 	}
 
 	public ClientAndServer.NoxReading[] take_readings()
@@ -82,9 +92,9 @@ _delegate.add_monitoring_station(station_name,station_location,station_ior);
 		return _delegate.take_readings();
 	}
 
-	public ClientAndServer.NoxReading[] log()
+	public java.lang.String location_name()
 	{
-		return _delegate.log();
+		return _delegate.location_name();
 	}
 
 }

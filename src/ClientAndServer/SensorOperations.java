@@ -5,7 +5,7 @@ package ClientAndServer;
  * Generated from IDL interface "Sensor".
  *
  * @author JacORB IDL compiler V 3.9
- * @version generated at 04-Mar-2020 19:25:35
+ * @version generated at 08-Mar-2020 16:46:37
  */
 
 public interface SensorOperations
@@ -18,4 +18,6 @@ public interface SensorOperations
 	void activate();
 	void deactivate();
 	void reset();
+	void raise_alarm(ClientAndServer.NoxReading reading);
+	void connectLMS();
 }
