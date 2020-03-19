@@ -38,7 +38,7 @@ module ClientAndServer {
     interface HeadQuarter{
         void raise_alarm(in NoxReading alarm_reading);
         void register_agency(in string who, in string contact_details, in string area_of_interest);
-        void register_local_server(in string server_name);
+        void register_local_monitoring_station(in string server_name);
         string getNox();
         void connectLMS();
         string noxReading_ToString(in NoxReading reading);

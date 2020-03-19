@@ -5,7 +5,7 @@ package ClientAndServer;
  * Generated from IDL interface "HeadQuarter".
  *
  * @author JacORB IDL compiler V 3.9
- * @version generated at 08-Mar-2020 16:46:37
+ * @version generated at 19-Mar-2020 20:12:14
  */
 
 public abstract class HeadQuarterPOA
@@ -19,7 +19,7 @@ public abstract class HeadQuarterPOA
 		m_opsHash.put ( "connectLMS", Integer.valueOf(1));
 		m_opsHash.put ( "raise_alarm", Integer.valueOf(2));
 		m_opsHash.put ( "noxReading_ToString", Integer.valueOf(3));
-		m_opsHash.put ( "register_local_server", Integer.valueOf(4));
+		m_opsHash.put ( "register_local_monitoring_station", Integer.valueOf(4));
 		m_opsHash.put ( "register_agency", Integer.valueOf(5));
 	}
 	private String[] ids = {"IDL:ClientAndServer/HeadQuarter:1.0"};
@@ -74,11 +74,11 @@ _out.write_string( tmpResult13 );
 _out.write_string( tmpResult14 );
 				break;
 			}
-			case 4: // register_local_server
+			case 4: // register_local_monitoring_station
 			{
 				java.lang.String _arg0=_input.read_string();
 				_out = handler.createReply();
-				register_local_server(_arg0);
+				register_local_monitoring_station(_arg0);
 				break;
 			}
 			case 5: // register_agency

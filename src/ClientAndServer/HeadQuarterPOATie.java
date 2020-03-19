@@ -6,7 +6,7 @@ import org.omg.PortableServer.POA;
  * Generated from IDL interface "HeadQuarter".
  *
  * @author JacORB IDL compiler V 3.9
- * @version generated at 08-Mar-2020 16:46:37
+ * @version generated at 19-Mar-2020 20:12:14
  */
 
 public class HeadQuarterPOATie
@@ -72,9 +72,9 @@ _delegate.raise_alarm(alarm_reading);
 		return _delegate.noxReading_ToString(reading);
 	}
 
-	public void register_local_server(java.lang.String server_name)
+	public void register_local_monitoring_station(java.lang.String server_name)
 	{
-_delegate.register_local_server(server_name);
+_delegate.register_local_monitoring_station(server_name);
 	}
 
 	public void register_agency(java.lang.String who, java.lang.String contact_details, java.lang.String area_of_interest)

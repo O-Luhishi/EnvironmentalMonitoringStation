@@ -46,7 +46,7 @@ public class HeadQuarterServant extends HeadQuarterPOA {
     @Override
     public void raise_alarm(NoxReading alarm_reading) {
         System.out.println(noxReading_ToString(alarm_reading));
-        parent.thing = (noxReading_ToString(alarm_reading));
+        parent.noxReadingAlarmList.addElement(noxReading_ToString(alarm_reading));
     }
 
     @Override
@@ -55,8 +55,8 @@ public class HeadQuarterServant extends HeadQuarterPOA {
     }
 
     @Override
-    public void register_local_server(String server_name) {
-
+    public void register_local_monitoring_station(String server_name) {
+        parent.LMSAndIORList.addElement(server_name);
     }
     @Override
     public String noxReading_ToString(NoxReading reading){

@@ -7,15 +7,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 
 
 public class HeadQuarterUI extends JFrame {
-	private JTextArea textarea;
-	public String thing;
+	public JFrame frame;
+	public DefaultListModel<String> noxReadingAlarmList, LMSAndIORList;
+	public JList list_lms, list;
+
+	public JTextArea sensor_reading;
+	public JLabel lblNoxReading;
 
 	public ClientAndServer.HeadQuarter headQuarter;
 
@@ -47,40 +49,64 @@ public class HeadQuarterUI extends JFrame {
 			headQuarter = ClientAndServer.HeadQuarterHelper.narrow(ref);
 
 
-			// set up the GUI
-			textarea = new JTextArea(20,25);
-			JScrollPane scrollpane = new JScrollPane(textarea);
-			JPanel textpanel = new JPanel();
+			noxReadingAlarmList = new DefaultListModel<>();
+			LMSAndIORList = new DefaultListModel<>();
 
-			JPanel buttonpanel = new JPanel();
-			JButton getItButton = new JButton("Get Nox Reading");
-			getItButton.addActionListener (new ActionListener() {
-				public void actionPerformed (ActionEvent evt) {
-//					textarea.append("Calling relay...\n");
-//					String result = lms.fetch_NoxReading();
-//					textarea.append("   Result = \n" + result + "\n\n");
-					String result = headQuarter.getNox();
-					System.out.println("Result: "+ result);
-					textarea.append("Result: "+ result);
+
+			frame = new JFrame();
+			frame.setBounds(100, 100, 600, 513);
+			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			frame.getContentPane().setLayout(null);
+
+			JLabel lblHeadQuaters = new JLabel("HeadQuarter Server ");
+			lblHeadQuaters.setBounds(235, 6, 125, 16);
+			frame.getContentPane().add(lblHeadQuaters);
+
+			list = new JList();
+			list.setModel(noxReadingAlarmList);
+			//list.setBounds(26, 59, 898, 213);
+			//frame.getContentPane().add(list);
+
+			JLabel lblAlarmList = new JLabel("Alarm List From Local Monitoring Station: Leeds ");
+			lblAlarmList.setBounds(22, 46, 380, 16);
+			frame.getContentPane().add(lblAlarmList);
+			
+			JScrollPane scrollPane = new JScrollPane(list);
+			scrollPane.setBounds(22, 76, 550, 161);
+			frame.getContentPane().add(scrollPane);
+			
+			JLabel lblLocalMonitoringSystem = new JLabel("Connected Local Monitoring System:");
+			lblLocalMonitoringSystem.setBounds(22, 258, 241, 16);
+			frame.getContentPane().add(lblLocalMonitoringSystem);
+			
+			list_lms = new JList();
+			list_lms.setModel(LMSAndIORList);
+			
+			JScrollPane scrollPane_LMS_IOR = new JScrollPane(list_lms);
+			scrollPane_LMS_IOR.setBounds(26, 295, 200, 120);
+			frame.getContentPane().add(scrollPane_LMS_IOR);
+
+
+			sensor_reading = new JTextArea();
+			sensor_reading.setEditable(false);
+			sensor_reading.setBounds(376, 297, 196, 116);
+			frame.getContentPane().add(sensor_reading);
+			
+			lblNoxReading = new JLabel("Latest Nox Reading Sensor: ");
+			lblNoxReading.setBounds(360, 258, 212, 16);
+			frame.getContentPane().add(lblNoxReading);
+			
+			JButton btnGetNoxReading = new JButton("Get Nox Reading");
+			btnGetNoxReading.setBounds(399, 425, 153, 29);
+			frame.getContentPane().add(btnGetNoxReading);
+			btnGetNoxReading.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO: Create Function To Return Station Name In HQ Servant
+					set_Label_Name_To_Sensor("Leeds");
+					setNoxReadingList(headQuarter.getNox());
 				}
 			});
-			textarea.append(thing);
-			textpanel.add(scrollpane);
-			buttonpanel.add(getItButton);
-
-			getContentPane().add(textpanel, "Center");
-			getContentPane().add(buttonpanel, "South");
-
-			setSize(400, 500);
-			setTitle("HeadQuarter Station");
-
-			addWindowListener (new WindowAdapter () {
-				public void windowClosing (WindowEvent evt) {
-					System.exit(0);
-				}
-			} );
-
-			textarea.append("Server started.  Click the button to contact LMS...\n\n");
 
 		} catch (Exception e) {
 			System.out.println("ERROR : " + e) ;
@@ -88,13 +114,23 @@ public class HeadQuarterUI extends JFrame {
 		}
 	}
 
+	private void setNoxReadingList(String reading){
+		sensor_reading.setText(reading);
+	}
 
+	private void set_Label_Name_To_Sensor(String sensorName){
+		lblNoxReading.setText("Latest Nox Reading Sensor: "+ sensorName);
+	}
 
 	public static void main(String[] args) {
-		final String[] arguments = args;
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				new HeadQuarterUI(arguments).setVisible(true);
+				try {
+					HeadQuarterUI window = new HeadQuarterUI(args);
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		});
 	}

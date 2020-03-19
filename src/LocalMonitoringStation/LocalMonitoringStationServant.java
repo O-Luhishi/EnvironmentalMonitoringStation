@@ -49,6 +49,7 @@ class LocalMonitoringStationServant extends LocalMonitoringStationPOA {
 
 	@Override
 	public void raise_alarm(NoxReading alarmReading) {
+		// TODO: Add function to only alert on 2 alarms above 50
 		System.out.println(noxReading_ToString(alarmReading));
 		connectHQ();
 		hqServer.raise_alarm(alarmReading);

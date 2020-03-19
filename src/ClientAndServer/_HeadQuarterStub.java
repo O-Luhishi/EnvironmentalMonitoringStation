@@ -5,7 +5,7 @@ package ClientAndServer;
  * Generated from IDL interface "HeadQuarter".
  *
  * @author JacORB IDL compiler V 3.9
- * @version generated at 08-Mar-2020 16:46:37
+ * @version generated at 19-Mar-2020 20:12:14
  */
 
 public class _HeadQuarterStub
@@ -355,7 +355,7 @@ public class _HeadQuarterStub
 
 	}
 
-	public void register_local_server(java.lang.String server_name)
+	public void register_local_monitoring_station(java.lang.String server_name)
 	{
 		while(true)
 		{
@@ -365,7 +365,7 @@ public class _HeadQuarterStub
 				org.omg.CORBA.portable.OutputStream _os = null;
 				try
 				{
-					_os = _request( "register_local_server", true);
+					_os = _request( "register_local_monitoring_station", true);
 					java.lang.String tmpResult9 = server_name;
 _os.write_string( tmpResult9 );
 					_is = _invoke(_os);
@@ -406,13 +406,13 @@ _os.write_string( tmpResult9 );
 		}
 		else
 		{
-			org.omg.CORBA.portable.ServantObject _so = _servant_preinvoke( "register_local_server", _opsClass );
+			org.omg.CORBA.portable.ServantObject _so = _servant_preinvoke( "register_local_monitoring_station", _opsClass );
 			if( _so == null )
 				continue;
 			HeadQuarterOperations _localServant = (HeadQuarterOperations)_so.servant;
 			try
 			{
-				_localServant.register_local_server(server_name);
+				_localServant.register_local_monitoring_station(server_name);
 				if ( _so instanceof org.omg.CORBA.portable.ServantObjectExt) 
 					((org.omg.CORBA.portable.ServantObjectExt)_so).normalCompletion();
 				return;
