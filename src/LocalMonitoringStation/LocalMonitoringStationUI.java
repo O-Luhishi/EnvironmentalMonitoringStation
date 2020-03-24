@@ -10,9 +10,13 @@ import javax.swing.*;
 
 public class LocalMonitoringStationUI extends JFrame {
 	private JTextArea textarea;
+	public ClientAndServer.LocalMonitoringStation lms;
+
+	public String stringified_ior;
 
 	public LocalMonitoringStationUI(String[] args) {
 		try {
+			String lms_name = JOptionPane.showInputDialog("Please Register Local Monitoring Station");
 			// create and initialize the ORB
 			ORB orb = ORB.init(args, null);
 
@@ -25,14 +29,15 @@ public class LocalMonitoringStationUI extends JFrame {
 
 			// Get the 'stringified IOR'
 			org.omg.CORBA.Object ref = rootpoa.servant_to_reference(relayRef);
-			String stringified_ior = orb.object_to_string(ref);
+			stringified_ior = orb.object_to_string(ref);
 
 			// Save IOR to file
-			BufferedWriter out = new BufferedWriter(new FileWriter("relay.ref"));
+			BufferedWriter out = new BufferedWriter(new FileWriter(lms_name + "relay.ref"));
 			out.write(stringified_ior);
 			out.close();
 
-
+			lms = ClientAndServer.LocalMonitoringStationHelper.narrow(ref);
+			lms.add_local_monitoring_station(lms_name, stringified_ior);
 			// set up the GUI
 			textarea = new JTextArea(20,25);
 			JScrollPane scrollpane = new JScrollPane(textarea);
@@ -63,7 +68,6 @@ public class LocalMonitoringStationUI extends JFrame {
 			e.printStackTrace(System.out);
 		}
 	}
-
 
 	void addMessage(String message){
 		textarea.append(message);

@@ -2,10 +2,12 @@ package LocalMonitoringStation;
 
 import ClientAndServer.LocalMonitoringStationPOA;
 import ClientAndServer.NoxReading;
+import ClientAndServer.Log_of_alarm_readingsHolder;
 import org.omg.CORBA.ORB;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.ArrayList;
 
 class LocalMonitoringStationServant extends LocalMonitoringStationPOA {
 
@@ -13,17 +15,22 @@ class LocalMonitoringStationServant extends LocalMonitoringStationPOA {
 	private ClientAndServer.Sensor server;
 	private ClientAndServer.HeadQuarter hqServer;
 	private LocalMonitoringStationUI parent;
+	private ArrayList<NoxReading> noxReadingArrayList;
+	private Log_of_alarm_readingsHolder noxReadingHolder = new Log_of_alarm_readingsHolder();
+
+	public int log_count = 2;
 
 	LocalMonitoringStationServant(LocalMonitoringStationUI parentGUI, ORB orb_val) {
 		// store reference to parent GUI
 		parent = parentGUI;
 		// store reference to ORB
 		orb = orb_val;
+		noxReadingArrayList = new ArrayList<>();
 	}
 
 	@Override
-	public String fetch_NoxReading() {
-		connectSensor();
+	public String fetch_NoxReading(String sensor_name) {
+		connectSensor(sensor_name);
 		parent.addMessage("Fetch_NoxReading called by client.  Calling server..\n");
 		NoxReading messageFromServer = server.get_reading();
 		parent.addMessage("message from server = " + messageFromServer + "\n"
@@ -43,8 +50,19 @@ class LocalMonitoringStationServant extends LocalMonitoringStationPOA {
 	}
 
 	@Override
-	public NoxReading[] log() {
+	public NoxReading[] take_readings() {
 		return new NoxReading[0];
+	}
+
+	@Override
+	public NoxReading[] log() {
+		NoxReading[] noxReadingArray = new NoxReading[noxReadingArrayList.size()];
+		return noxReadingArrayList.toArray(noxReadingArray);
+	}
+
+	@Override
+	public void appendReadingToNoxReadingList(NoxReading reading) {
+		noxReadingArrayList.add(reading);
 	}
 
 	@Override
@@ -56,13 +74,14 @@ class LocalMonitoringStationServant extends LocalMonitoringStationPOA {
 	}
 
 	@Override
-	public NoxReading[] take_readings() {
-		return new NoxReading[0];
+	public void add_monitoring_station(String station_name, String station_location, String station_ior) {
+
 	}
 
 	@Override
-	public void add_monitoring_station(String station_name, String station_location, String station_ior) {
-
+	public void add_local_monitoring_station(String lms_name, String lms_ior) {
+		connectHQ();
+		hqServer.register_local_monitoring_station(lms_name);
 	}
 
 	public String noxReading_ToString(NoxReading object){
@@ -71,11 +90,11 @@ class LocalMonitoringStationServant extends LocalMonitoringStationPOA {
 	}
 
 	@Override
-	public void connectSensor(){
+	public void connectSensor(String sensor_name){
 		// look up the server
 		try {
 			// read in the 'stringified IOR'
-			BufferedReader in = new BufferedReader(new FileReader("server.ref"));
+			BufferedReader in = new BufferedReader(new FileReader(sensor_name + "server.ref"));
 			String stringified_ior = in.readLine();
 
 			// get object reference from stringified IOR

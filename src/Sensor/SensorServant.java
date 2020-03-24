@@ -57,15 +57,14 @@ class SensorServant extends SensorPOA {
 
     @Override
     public void raise_alarm(NoxReading reading){
-        connectLMS();
         lms_server.raise_alarm(reading);
     }
 
     @Override
-    public void connectLMS() {
+    public void connectLMS(String lms_name) {
         try {
             // read in the 'stringified IOR'
-            BufferedReader in = new BufferedReader(new FileReader("relay.ref"));
+            BufferedReader in = new BufferedReader(new FileReader(lms_name+ "relay.ref"));
             String stringified_ior_LMS = in.readLine();
 
             // get object reference from stringified IOR

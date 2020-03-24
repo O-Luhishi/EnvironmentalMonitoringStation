@@ -17,21 +17,23 @@ module ClientAndServer {
         void deactivate();
         void reset();
         void raise_alarm(in NoxReading reading);
-        void connectLMS();
+        void connectLMS(in string lms_name);
     };
 
     typedef sequence<NoxReading> Log_of_alarm_readings;
     typedef sequence<NoxReading> Set_of_readings;
 
     interface  LocalMonitoringStation {
-        string fetch_NoxReading();
+        Set_of_readings take_readings();
+        string fetch_NoxReading(in string sensor_name);
         readonly attribute string name;
         readonly attribute string location_name;
         readonly attribute Log_of_alarm_readings log;
+        void appendReadingToNoxReadingList(in NoxReading reading);
         void raise_alarm (in NoxReading alarmReading);
-        Set_of_readings take_readings();
         void add_monitoring_station(in string station_name, in string station_location, in string station_ior);
-        void connectSensor();
+        void add_local_monitoring_station(in string lms_name, in string lms_ior);
+        void connectSensor(in string sensor_name);
         void connectHQ();
     };
 
@@ -39,8 +41,8 @@ module ClientAndServer {
         void raise_alarm(in NoxReading alarm_reading);
         void register_agency(in string who, in string contact_details, in string area_of_interest);
         void register_local_monitoring_station(in string server_name);
-        string getNox();
-        void connectLMS();
+        string getNox(in string lms_name, in string sensor_name);
+        void connectLMS(in string lms_name);
         string noxReading_ToString(in NoxReading reading);
     };
 };

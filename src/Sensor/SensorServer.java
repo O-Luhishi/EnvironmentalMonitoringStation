@@ -15,6 +15,7 @@ public class SensorServer extends JFrame {
     private JTextArea textarea;
 
     public static String stationName;
+    public static String lms_name, sensor_name;
     public static int readingValue;
     public static int time;
     public static int date;
@@ -30,6 +31,8 @@ public class SensorServer extends JFrame {
 
     public SensorServer(String[] args) {
         try {
+            sensor_name = JOptionPane.showInputDialog("Please Register Your Sensor Name");
+            lms_name = JOptionPane.showInputDialog("Please Connect To A Local Monitoring Station");
             // create and initialize the ORB
             orb = ORB.init(args, null);
 
@@ -44,7 +47,7 @@ public class SensorServer extends JFrame {
             String stringified_ior = orb.object_to_string(ref);
 
             // Save IOR to file
-            BufferedWriter out = new BufferedWriter(new FileWriter("server.ref"));
+            BufferedWriter out = new BufferedWriter(new FileWriter(sensor_name + "server.ref"));
             out.write(stringified_ior);
             out.close();
 
@@ -66,6 +69,8 @@ public class SensorServer extends JFrame {
             panel.add(lblReadingValue);
 
             txtStationName = new JTextField(14);
+            txtStationName.setText(lms_name);
+            txtStationName.setEditable(false);
             panel.add(txtStationName);
 
             JLabel lblStationName = new JLabel("Station Name");
@@ -125,6 +130,7 @@ public class SensorServer extends JFrame {
         date = Integer.parseInt(txtDate.getText());
         time = Integer.parseInt(txtTime.getText());
         if (readingValue >= 50){
+            sensorRef.connectLMS(lms_name);
             sensorRef.raise_alarm(sensorRef.get_reading());
         }
     }

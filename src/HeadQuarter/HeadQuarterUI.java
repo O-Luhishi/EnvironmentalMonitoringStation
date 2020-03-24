@@ -13,11 +13,15 @@ import java.io.FileWriter;
 
 public class HeadQuarterUI extends JFrame {
 	public JFrame frame;
-	public DefaultListModel<String> noxReadingAlarmList, LMSAndIORList;
-	public JList list_lms, list;
+	public DefaultListModel<String> noxReadingAlarmList, lmsList, lms_logs_model;
+	public JList lms_list, alarm_list, lms_logs_list;
 
 	public JTextArea sensor_reading;
 	public JLabel lblNoxReading;
+
+	public JScrollPane lms_logs_ScrollPane, alarm_list_ScrollPane, lms_ScrollPane;
+
+	public String lms_name, sensor_name;
 
 	public ClientAndServer.HeadQuarter headQuarter;
 
@@ -50,11 +54,11 @@ public class HeadQuarterUI extends JFrame {
 
 
 			noxReadingAlarmList = new DefaultListModel<>();
-			LMSAndIORList = new DefaultListModel<>();
-
+			lmsList = new DefaultListModel<>();
+			lms_logs_model = new DefaultListModel<>();
 
 			frame = new JFrame();
-			frame.setBounds(100, 100, 600, 513);
+			frame.setBounds(100, 100, 600, 672);
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			frame.getContentPane().setLayout(null);
 
@@ -62,49 +66,70 @@ public class HeadQuarterUI extends JFrame {
 			lblHeadQuaters.setBounds(235, 6, 125, 16);
 			frame.getContentPane().add(lblHeadQuaters);
 
-			list = new JList();
-			list.setModel(noxReadingAlarmList);
+			alarm_list = new JList();
+			alarm_list.setModel(noxReadingAlarmList);
 			//list.setBounds(26, 59, 898, 213);
 			//frame.getContentPane().add(list);
 
-			JLabel lblAlarmList = new JLabel("Alarm List From Local Monitoring Station: Leeds ");
+			JLabel lblAlarmList = new JLabel("Alarm List From All Local Monitoring Stations:");
 			lblAlarmList.setBounds(22, 46, 380, 16);
 			frame.getContentPane().add(lblAlarmList);
 			
-			JScrollPane scrollPane = new JScrollPane(list);
-			scrollPane.setBounds(22, 76, 550, 161);
-			frame.getContentPane().add(scrollPane);
+			alarm_list_ScrollPane = new JScrollPane(alarm_list);
+			alarm_list_ScrollPane.setBounds(22, 76, 550, 161);
+			frame.getContentPane().add(alarm_list_ScrollPane);
 			
 			JLabel lblLocalMonitoringSystem = new JLabel("Connected Local Monitoring System:");
-			lblLocalMonitoringSystem.setBounds(22, 258, 241, 16);
+			lblLocalMonitoringSystem.setBounds(22, 428, 241, 16);
 			frame.getContentPane().add(lblLocalMonitoringSystem);
 			
-			list_lms = new JList();
-			list_lms.setModel(LMSAndIORList);
+			lms_list = new JList();
+			lms_list.setModel(lmsList);
 			
-			JScrollPane scrollPane_LMS_IOR = new JScrollPane(list_lms);
-			scrollPane_LMS_IOR.setBounds(26, 295, 200, 120);
-			frame.getContentPane().add(scrollPane_LMS_IOR);
+			lms_ScrollPane = new JScrollPane(lms_list);
+			lms_ScrollPane.setBounds(26, 465, 200, 120);
+			frame.getContentPane().add(lms_ScrollPane);
 
 
 			sensor_reading = new JTextArea();
 			sensor_reading.setEditable(false);
-			sensor_reading.setBounds(376, 297, 196, 116);
+			sensor_reading.setBounds(376, 467, 196, 116);
 			frame.getContentPane().add(sensor_reading);
 			
 			lblNoxReading = new JLabel("Latest Nox Reading Sensor: ");
-			lblNoxReading.setBounds(360, 258, 212, 16);
+			lblNoxReading.setBounds(360, 428, 212, 16);
 			frame.getContentPane().add(lblNoxReading);
 			
 			JButton btnGetNoxReading = new JButton("Get Nox Reading");
-			btnGetNoxReading.setBounds(399, 425, 153, 29);
+			btnGetNoxReading.setBounds(399, 595, 153, 29);
 			frame.getContentPane().add(btnGetNoxReading);
+			
+			JLabel lblLocalMonitoringStation = new JLabel("Local Monitoring Station Logs:");
+			lblLocalMonitoringStation.setBounds(22, 251, 380, 16);
+			frame.getContentPane().add(lblLocalMonitoringStation);
+
+			lms_logs_list = new JList();
+			lms_logs_list.setModel(lms_logs_model);
+			
+			lms_logs_ScrollPane = new JScrollPane(lms_logs_list);
+			lms_logs_ScrollPane.setBounds(22, 279, 550, 132);
+			frame.getContentPane().add(lms_logs_ScrollPane);
+			
+			JButton btnActivateLms = new JButton("Activate LMS");
+			btnActivateLms.setBounds(22, 595, 117, 29);
+			frame.getContentPane().add(btnActivateLms);
+			
+			JButton btnDeactivateLms = new JButton("Deactivate LMS");
+			btnDeactivateLms.setBounds(213, 595, 139, 29);
+			frame.getContentPane().add(btnDeactivateLms);
 			btnGetNoxReading.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					// TODO: Create Function To Return Station Name In HQ Servant
-					set_Label_Name_To_Sensor("Leeds");
-					setNoxReadingList(headQuarter.getNox());
+					lms_name = JOptionPane.showInputDialog("Please Select Which Local Monitoring Station");
+					sensor_name = JOptionPane.showInputDialog("Please Select Which Sensor");
+					set_Label_Name_To_Sensor(lms_name);
+					setNoxReadingList(headQuarter.getNox(lms_name, sensor_name));
 				}
 			});
 

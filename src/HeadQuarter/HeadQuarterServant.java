@@ -20,11 +20,11 @@ public class HeadQuarterServant extends HeadQuarterPOA {
         orb = orb_val;
     }
     @Override
-    public void connectLMS(){
+    public void connectLMS(String lms_name){
         // look up the server
         try {
             // read in the 'stringified IOR'
-            BufferedReader in = new BufferedReader(new FileReader("relay.ref"));
+            BufferedReader in = new BufferedReader(new FileReader(lms_name + "relay.ref"));
             String stringified_ior = in.readLine();
 
             // get object reference from stringified IOR
@@ -38,9 +38,9 @@ public class HeadQuarterServant extends HeadQuarterPOA {
     }
 
     @Override
-    public String getNox(){
-        connectLMS();
-        return server.fetch_NoxReading();
+    public String getNox(String lms_name, String sensor_name){
+        connectLMS(lms_name);
+        return server.fetch_NoxReading(sensor_name);
     }
 
     @Override
@@ -56,7 +56,7 @@ public class HeadQuarterServant extends HeadQuarterPOA {
 
     @Override
     public void register_local_monitoring_station(String server_name) {
-        parent.LMSAndIORList.addElement(server_name);
+        parent.lmsList.addElement(server_name);
     }
     @Override
     public String noxReading_ToString(NoxReading reading){

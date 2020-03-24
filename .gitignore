@@ -7,3 +7,5 @@ out/*
 *.iml
 *.all
 .DS_Store
+*.ref
+src/ClientAndServer/*
