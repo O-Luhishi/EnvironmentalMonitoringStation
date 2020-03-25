@@ -2,10 +2,12 @@ package HeadQuarter;
 
 import ClientAndServer.HeadQuarterPOA;
 import ClientAndServer.NoxReading;
+import ClientAndServer.SensorData;
 import org.omg.CORBA.ORB;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.ArrayList;
 
 public class HeadQuarterServant extends HeadQuarterPOA {
 
@@ -58,9 +60,29 @@ public class HeadQuarterServant extends HeadQuarterPOA {
     public void register_local_monitoring_station(String server_name) {
         parent.lmsList.addElement(server_name);
     }
+
     @Override
     public String noxReading_ToString(NoxReading reading){
-        return "Station Name: " + reading.station_name + "\n" + "Reading Value: " + reading.reading_value + "\n"
+        return "LMS: " + reading.station_name + "\n" + "Area Name: " + reading.sensor_name +"\n" + "Reading Value: " + reading.reading_value + "\n"
                 + "Date: " + reading.date + "\n" + "Time: " + reading.time;
+    }
+
+    @Override
+    public void return_all_logs(String lms_name) {
+        connectLMS(lms_name);
+        NoxReading[] logs = server.log();
+        parent.lms_logs_model.clear();
+        for (NoxReading obj : logs){
+            parent.lms_logs_model.addElement(noxReading_ToString(obj));
+        }
+    }
+
+    @Override
+    public void return_connected_sensors(String lms_name){
+        connectLMS(lms_name);
+        SensorData[] sensor = server.sensor_data();
+        for (SensorData s : sensor){
+            System.out.println(s.sensor_name);
+        }
     }
 }

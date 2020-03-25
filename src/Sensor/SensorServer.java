@@ -1,6 +1,7 @@
 package Sensor;
 
 import ClientAndServer.NoxReading;
+import ClientAndServer.SensorData;
 import org.omg.CORBA.*;
 import org.omg.PortableServer.*;
 import org.omg.PortableServer.POA;
@@ -14,7 +15,7 @@ import javax.swing.*;
 public class SensorServer extends JFrame {
     private JTextArea textarea;
 
-    public static String stationName;
+    public static String stationName, areaName;
     public static String lms_name, sensor_name;
     public static int readingValue;
     public static int time;
@@ -51,6 +52,7 @@ public class SensorServer extends JFrame {
             out.write(stringified_ior);
             out.close();
 
+            add_sensor_to_LMS(sensor_name, lms_name);
 
             // set up the GUI
             textarea = new JTextArea(20, 25);
@@ -104,14 +106,11 @@ public class SensorServer extends JFrame {
 
             setSize(400, 524);
             setTitle("Sensor.SensorServer");
-
             addWindowListener(new java.awt.event.WindowAdapter() {
                 public void windowClosing(java.awt.event.WindowEvent evt) {
                     System.exit(0);
                 }
             });
-
-
             // wait for invocations from clients
             textarea.append("Server started.  Waiting for clients...\n\n");
         } catch (Exception e) {
@@ -124,15 +123,19 @@ public class SensorServer extends JFrame {
         textarea.append(message);
     }
 
+    private void add_sensor_to_LMS(String sensor_name, String lms_name){
+        SensorData sensor = new SensorData();
+        sensor.sensor_name = sensor_name;
+        sensorRef.add_sensor_to_LMS(sensor, lms_name);
+    }
+
     private void get_Reading() {
+        areaName = sensor_name;
         stationName = txtStationName.getText();
         readingValue = Integer.parseInt(txtReadingValue.getText());
         date = Integer.parseInt(txtDate.getText());
         time = Integer.parseInt(txtTime.getText());
-        if (readingValue >= 50){
-            sensorRef.connectLMS(lms_name);
-            sensorRef.raise_alarm(sensorRef.get_reading());
-        }
+        sensorRef.raise_alarm(sensorRef.get_reading(), lms_name);
     }
 
 

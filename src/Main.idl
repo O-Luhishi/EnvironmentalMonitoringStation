@@ -5,8 +5,13 @@ module ClientAndServer {
     struct NoxReading{
        long time;
        long date;
+       string sensor_name;
        string station_name;
        long reading_value;
+    };
+
+    struct SensorData{
+        string sensor_name;
     };
 
     interface Sensor {
@@ -16,11 +21,13 @@ module ClientAndServer {
         void activate();
         void deactivate();
         void reset();
-        void raise_alarm(in NoxReading reading);
+        void raise_alarm(in NoxReading reading, in string lms_name);
         void connectLMS(in string lms_name);
+        void add_sensor_to_LMS(in SensorData sensor_name, in string lms_name);
     };
 
     typedef sequence<NoxReading> Log_of_alarm_readings;
+    typedef sequence<SensorData> Log_of_connected_sensors;
     typedef sequence<NoxReading> Set_of_readings;
 
     interface  LocalMonitoringStation {
@@ -29,8 +36,10 @@ module ClientAndServer {
         readonly attribute string name;
         readonly attribute string location_name;
         readonly attribute Log_of_alarm_readings log;
+        readonly attribute Log_of_connected_sensors sensor_data;
         void appendReadingToNoxReadingList(in NoxReading reading);
-        void raise_alarm (in NoxReading alarmReading);
+        void appendConnectedSensorList(in SensorData data);
+        void raise_alarm ();
         void add_monitoring_station(in string station_name, in string station_location, in string station_ior);
         void add_local_monitoring_station(in string lms_name, in string lms_ior);
         void connectSensor(in string sensor_name);
@@ -44,5 +53,7 @@ module ClientAndServer {
         string getNox(in string lms_name, in string sensor_name);
         void connectLMS(in string lms_name);
         string noxReading_ToString(in NoxReading reading);
+        void return_all_logs(in string lms_name);
+        void return_connected_sensors(in string lms_name);
     };
 };

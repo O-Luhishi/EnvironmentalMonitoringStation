@@ -1,5 +1,6 @@
 package HeadQuarter;
 
+import LocalMonitoringStation.LocalMonitoringStationUI;
 import org.omg.CORBA.ORB;
 import org.omg.PortableServer.*;
 import org.omg.PortableServer.POA;
@@ -13,21 +14,25 @@ import java.io.FileWriter;
 
 public class HeadQuarterUI extends JFrame {
 	public JFrame frame;
-	public DefaultListModel<String> noxReadingAlarmList, lmsList, lms_logs_model;
-	public JList lms_list, alarm_list, lms_logs_list;
-
+	public DefaultListModel<String> noxReadingAlarmList;
+	public DefaultListModel<String> lmsList;
+	public DefaultListModel<String> lms_logs_model;
+	public JList lms_list;
+	public JList alarm_list;
+	public JList lms_logs_list;
 	public JTextArea sensor_reading;
 	public JLabel lblNoxReading;
-
 	public JScrollPane lms_logs_ScrollPane, alarm_list_ScrollPane, lms_ScrollPane;
 
 	public String lms_name, sensor_name;
+	public static String[] arguments;
 
 	public ClientAndServer.HeadQuarter headQuarter;
 
 	public HeadQuarterUI(String[] args) {
 		try {
-		// create and initialize the ORB
+			arguments = args;
+			// create and initialize the ORB
 			ORB orb = ORB.init(args, null);
 
 			// get reference to rootpoa & activate the POAManager
@@ -54,7 +59,7 @@ public class HeadQuarterUI extends JFrame {
 
 
 			noxReadingAlarmList = new DefaultListModel<>();
-			lmsList = new DefaultListModel<>();
+			lmsList = new DefaultListModel<String>();
 			lms_logs_model = new DefaultListModel<>();
 
 			frame = new JFrame();
@@ -103,6 +108,14 @@ public class HeadQuarterUI extends JFrame {
 			JButton btnGetNoxReading = new JButton("Get Nox Reading");
 			btnGetNoxReading.setBounds(399, 595, 153, 29);
 			frame.getContentPane().add(btnGetNoxReading);
+			btnGetNoxReading.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					lms_name = JOptionPane.showInputDialog("Please Select Which Local Monitoring Station");
+					sensor_name = JOptionPane.showInputDialog("Please Select Which Sensor");
+					setNoxReadingList(headQuarter.getNox(lms_name, sensor_name));
+				}
+			});
 			
 			JLabel lblLocalMonitoringStation = new JLabel("Local Monitoring Station Logs:");
 			lblLocalMonitoringStation.setBounds(22, 251, 380, 16);
@@ -118,18 +131,22 @@ public class HeadQuarterUI extends JFrame {
 			JButton btnActivateLms = new JButton("Activate LMS");
 			btnActivateLms.setBounds(22, 595, 117, 29);
 			frame.getContentPane().add(btnActivateLms);
+			btnActivateLms.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					lms_name = JOptionPane.showInputDialog("Please Select Which Local Monitoring Station");
+					headQuarter.return_all_logs(lms_name);
+				}
+			});
 			
 			JButton btnDeactivateLms = new JButton("Deactivate LMS");
 			btnDeactivateLms.setBounds(213, 595, 139, 29);
 			frame.getContentPane().add(btnDeactivateLms);
-			btnGetNoxReading.addActionListener(new ActionListener() {
+			btnDeactivateLms.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					// TODO: Create Function To Return Station Name In HQ Servant
 					lms_name = JOptionPane.showInputDialog("Please Select Which Local Monitoring Station");
-					sensor_name = JOptionPane.showInputDialog("Please Select Which Sensor");
-					set_Label_Name_To_Sensor(lms_name);
-					setNoxReadingList(headQuarter.getNox(lms_name, sensor_name));
+					get_connected_sensors(lms_name);
 				}
 			});
 
@@ -143,8 +160,21 @@ public class HeadQuarterUI extends JFrame {
 		sensor_reading.setText(reading);
 	}
 
-	private void set_Label_Name_To_Sensor(String sensorName){
-		lblNoxReading.setText("Latest Nox Reading Sensor: "+ sensorName);
+	private void get_connected_sensors(String lms_name){
+		headQuarter.return_connected_sensors(lms_name);
+	}
+
+	private void deactivateLMS(){
+		String lms_name = JOptionPane.showInputDialog("Please Register Local Monitoring Station");
+		lmsList.removeElement(lms_name);
+	}
+
+	private void activateLMS(){
+		java.awt.EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				new LocalMonitoringStationUI(arguments).setVisible(true);
+			}
+		});
 	}
 
 	public static void main(String[] args) {

@@ -2,7 +2,7 @@ package LocalMonitoringStation;
 
 import ClientAndServer.LocalMonitoringStationPOA;
 import ClientAndServer.NoxReading;
-import ClientAndServer.Log_of_alarm_readingsHolder;
+import ClientAndServer.SensorData;
 import org.omg.CORBA.ORB;
 
 import java.io.BufferedReader;
@@ -16,9 +16,8 @@ class LocalMonitoringStationServant extends LocalMonitoringStationPOA {
 	private ClientAndServer.HeadQuarter hqServer;
 	private LocalMonitoringStationUI parent;
 	private ArrayList<NoxReading> noxReadingArrayList;
-	private Log_of_alarm_readingsHolder noxReadingHolder = new Log_of_alarm_readingsHolder();
-
-	public int log_count = 2;
+	public ArrayList<SensorData> sensor;
+	public int log_count = 0;
 
 	LocalMonitoringStationServant(LocalMonitoringStationUI parentGUI, ORB orb_val) {
 		// store reference to parent GUI
@@ -26,6 +25,7 @@ class LocalMonitoringStationServant extends LocalMonitoringStationPOA {
 		// store reference to ORB
 		orb = orb_val;
 		noxReadingArrayList = new ArrayList<>();
+		sensor = new ArrayList<>();
 	}
 
 	@Override
@@ -61,16 +61,35 @@ class LocalMonitoringStationServant extends LocalMonitoringStationPOA {
 	}
 
 	@Override
-	public void appendReadingToNoxReadingList(NoxReading reading) {
-		noxReadingArrayList.add(reading);
+	public SensorData[] sensor_data() {
+		SensorData[] sensorDataArray = new SensorData[sensor.size()];
+		return sensor.toArray(sensorDataArray);
 	}
 
 	@Override
-	public void raise_alarm(NoxReading alarmReading) {
-		// TODO: Add function to only alert on 2 alarms above 50
-		System.out.println(noxReading_ToString(alarmReading));
-		connectHQ();
-		hqServer.raise_alarm(alarmReading);
+	public void appendReadingToNoxReadingList(NoxReading reading) {
+		noxReadingArrayList.add(reading);
+		if (reading.reading_value >= 50) {
+			raise_alarm();
+		}
+	}
+
+	@Override
+	public void appendConnectedSensorList(SensorData data) {
+		sensor.add(data);
+	}
+
+	@Override
+	public void raise_alarm() {
+		log_count++;
+		if (log_count == 2) {
+			int temp = noxReadingArrayList.size()-1;
+			NoxReading read = noxReadingArrayList.get(temp);
+			System.out.println(noxReading_ToString(read));
+			connectHQ();
+			hqServer.raise_alarm(read);
+			log_count = 0;
+		}
 	}
 
 	@Override
@@ -85,7 +104,7 @@ class LocalMonitoringStationServant extends LocalMonitoringStationPOA {
 	}
 
 	public String noxReading_ToString(NoxReading object){
-		return "Station Name: " + object.station_name + "\n" + "Reading Value: " + object.reading_value + "\n"
+		return "LMS: " + object.station_name + "\n" + "Area Name: " + object.sensor_name +"\n" + "Reading Value: " + object.reading_value + "\n"
 				+ "Date: " + object.date + "\n" + "Time: " + object.time;
 	}
 

@@ -1,6 +1,7 @@
 package Sensor;
 
 import ClientAndServer.NoxReading;
+import ClientAndServer.SensorData;
 import ClientAndServer.SensorPOA;
 import org.omg.CORBA.ORB;
 
@@ -33,6 +34,7 @@ class SensorServant extends SensorPOA {
     public NoxReading get_reading() {
         parent.addMessage("Get_NoxReading called by HQ.\n    Replying with STRUCT message...\n\n");
         NoxReading NoxReadings = new NoxReading();
+        NoxReadings.sensor_name = SensorServer.areaName;
         NoxReadings.time = SensorServer.time;
         NoxReadings.date = SensorServer.date;
         NoxReadings.station_name = SensorServer.stationName;
@@ -56,8 +58,9 @@ class SensorServant extends SensorPOA {
     }
 
     @Override
-    public void raise_alarm(NoxReading reading){
-        lms_server.raise_alarm(reading);
+    public void raise_alarm(NoxReading reading, String lms_name){
+        connectLMS(lms_name);
+        lms_server.appendReadingToNoxReadingList(reading);
     }
 
     @Override
@@ -75,6 +78,12 @@ class SensorServant extends SensorPOA {
             System.err.println("ERROR: " + e);
             e.printStackTrace(System.out);
         }
+    }
+
+    @Override
+    public void add_sensor_to_LMS(SensorData sensor_name, String lms_name) {
+        connectLMS(lms_name);
+        lms_server.appendConnectedSensorList(sensor_name);
     }
 }
 
