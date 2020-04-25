@@ -113,7 +113,7 @@ public class HeadQuarterUI extends JFrame {
 			frame.getContentPane().add(lblNoxReading);
 			
 			JButton btnGetNoxReading = new JButton("Get Nox Reading");
-			btnGetNoxReading.setBounds(399, 595, 153, 29);
+			btnGetNoxReading.setBounds(420, 595, 153, 29);
 			frame.getContentPane().add(btnGetNoxReading);
 			btnGetNoxReading.addActionListener(new ActionListener() {
 				@Override
@@ -136,18 +136,31 @@ public class HeadQuarterUI extends JFrame {
 			frame.getContentPane().add(lms_logs_ScrollPane);
 			
 			JButton btnActivateSensor = new JButton("Activate Sensor");
-			btnActivateSensor.setBounds(22, 595, 130, 29);
+			btnActivateSensor.setBounds(22, 595, 140, 29);
 			frame.getContentPane().add(btnActivateSensor);
 			btnActivateSensor.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					String lms_name = JOptionPane.showInputDialog("Please Select Which Local Monitoring Station");
+					String sensor_name = JOptionPane.showInputDialog("Please Select Which Sensor To Power On");
+					activate_sensor(lms_name, sensor_name);
+				}
+			});
+
+			JButton btnDeactivateSensor = new JButton("Deactivate Sensor");
+			btnDeactivateSensor.setBounds(150, 595, 140, 29);
+			frame.getContentPane().add(btnDeactivateSensor);
+			btnDeactivateSensor.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					String lms_name = JOptionPane.showInputDialog("Please Select Which Local Monitoring Station");
 					String sensor_name = JOptionPane.showInputDialog("Please Select Which Sensor To Power Off");
+					deactivate_sensor(lms_name, sensor_name);
 				}
 			});
 			
 			JButton btnGetConnectedSensors = new JButton("Connected Sensors");
-			btnGetConnectedSensors.setBounds(213, 595, 150, 29);
+			btnGetConnectedSensors.setBounds(280, 595, 150, 29);
 			frame.getContentPane().add(btnGetConnectedSensors);
 			btnGetConnectedSensors.addActionListener(new ActionListener() {
 				@Override
@@ -171,19 +184,13 @@ public class HeadQuarterUI extends JFrame {
 		headQuarter.return_connected_sensors(lms_name);
 	}
 
-	private void deactivateLMS(){
-		String lms_name = JOptionPane.showInputDialog("Please Register Local Monitoring Station");
-		lmsList.removeElement(lms_name);
+	private void activate_sensor(String lms_name, String sensor_name){
+		headQuarter.activate_sensor(lms_name, sensor_name);
 	}
 
-	private void activateLMS(){
-		java.awt.EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				new LocalMonitoringStationUI(arguments).setVisible(true);
-			}
-		});
+	private void deactivate_sensor(String lms_name, String sensor_name){
+		headQuarter.deactivate_sensor(lms_name, sensor_name);
 	}
-
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {

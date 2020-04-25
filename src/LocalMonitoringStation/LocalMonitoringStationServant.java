@@ -142,4 +142,16 @@ class LocalMonitoringStationServant extends LocalMonitoringStationPOA {
 			e.printStackTrace(System.out);
 		}
 	}
+
+	@Override
+	public void deactivate_sensor(String sensor_name) {
+		connectSensor(sensor_name);
+		server.deactivate();
+	}
+
+	@Override
+	public void activate_sensor(String sensor_name) {
+		connectSensor(sensor_name);
+		server.activate();
+	}
 }

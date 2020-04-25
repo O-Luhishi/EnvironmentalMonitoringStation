@@ -12,6 +12,7 @@ module ClientAndServer {
 
     struct SensorData{
         string sensor_name;
+        long power_status;
     };
 
     interface Sensor {
@@ -44,6 +45,8 @@ module ClientAndServer {
         void add_local_monitoring_station(in string lms_name, in string lms_ior);
         void connectSensor(in string sensor_name);
         void connectHQ();
+        void deactivate_sensor(in string sensor_name);
+        void activate_sensor(in string sensor_name);
     };
 
     interface HeadQuarter{
@@ -55,5 +58,7 @@ module ClientAndServer {
         string noxReading_ToString(in NoxReading reading);
         void return_all_logs(in string lms_name);
         void return_connected_sensors(in string lms_name);
+        void deactivate_sensor(in string lms_name, in string sensor_name);
+        void activate_sensor(in string lms_name, in string sensor_name);
     };
 };

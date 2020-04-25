@@ -7,7 +7,6 @@ import org.omg.CORBA.ORB;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.ArrayList;
 
 public class HeadQuarterServant extends HeadQuarterPOA {
 
@@ -84,5 +83,17 @@ public class HeadQuarterServant extends HeadQuarterPOA {
         for (SensorData s : sensor){
             System.out.println(s.sensor_name);
         }
+    }
+
+    @Override
+    public void deactivate_sensor(String lms_name, String sensor_name) {
+        connectLMS(lms_name);
+        server.deactivate_sensor(sensor_name);
+    }
+
+    @Override
+    public void activate_sensor(String lms_name, String sensor_name) {
+        connectLMS(lms_name);
+        server.activate_sensor(sensor_name);
     }
 }

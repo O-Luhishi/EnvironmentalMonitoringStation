@@ -21,10 +21,14 @@ public class SensorServer extends JFrame {
     public static int time;
     public static int date;
 
+    public static JLabel powerStatus;
+
     public static JTextField txtTime;
     public static JTextField txtStationName;
     public static JTextField txtReadingValue;
     public static JTextField txtDate;
+
+    public static JButton btnSaveReadings;
 
     public ORB orb;
 
@@ -95,7 +99,7 @@ public class SensorServer extends JFrame {
             panel.add(lblDate);
             getContentPane().add(panell, "South");
 
-            JButton btnSaveReadings = new JButton("Save Readings");
+            btnSaveReadings = new JButton("Save Readings");
             btnSaveReadings.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -103,6 +107,9 @@ public class SensorServer extends JFrame {
                 }
             });
             panell.add(btnSaveReadings);
+
+            powerStatus = new JLabel("Power Status: ON");
+            panell.add(powerStatus);
 
             setSize(400, 524);
             setTitle("Sensor.SensorServer");
@@ -137,7 +144,6 @@ public class SensorServer extends JFrame {
         time = Integer.parseInt(txtTime.getText());
         sensorRef.raise_alarm(sensorRef.get_reading(), lms_name);
     }
-
 
     public static void main(String[] args) {
         final String[] arguments = args;

@@ -1,6 +1,7 @@
 package Sensor;
 
 import ClientAndServer.NoxReading;
+import ClientAndServer.Sensor;
 import ClientAndServer.SensorData;
 import ClientAndServer.SensorPOA;
 import org.omg.CORBA.ORB;
@@ -44,17 +45,30 @@ class SensorServant extends SensorPOA {
 
     @Override
     public void activate() {
-
+        SensorServer.txtStationName.setEditable(true);
+        SensorServer.txtTime.setEditable(true);
+        SensorServer.txtReadingValue.setEditable(true);
+        SensorServer.txtDate.setEditable(true);
+        SensorServer.btnSaveReadings.setEnabled(true);
+        SensorServer.powerStatus.setText("Power Status: ON");
     }
 
     @Override
     public void deactivate() {
-
+        SensorServer.txtStationName.setEditable(false);
+        SensorServer.txtTime.setEditable(false);
+        SensorServer.txtReadingValue.setEditable(false);
+        SensorServer.txtDate.setEditable(false);
+        SensorServer.btnSaveReadings.setEnabled(false);
+        SensorServer.powerStatus.setText("Power Status: OFF");
     }
 
     @Override
     public void reset() {
-
+        SensorServer.txtStationName.setText("");
+        SensorServer.txtTime.setText("");
+        SensorServer.txtReadingValue.setText("");
+        SensorServer.txtDate.setText("");
     }
 
     @Override
