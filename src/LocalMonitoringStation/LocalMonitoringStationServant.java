@@ -154,4 +154,12 @@ class LocalMonitoringStationServant extends LocalMonitoringStationPOA {
 		connectSensor(sensor_name);
 		server.activate();
 	}
+
+	@Override
+	public void reset_sensor(String sensor_name) {
+		connectSensor(sensor_name);
+		server.reset();
+		noxReadingArrayList.clear();
+
+	}
 }

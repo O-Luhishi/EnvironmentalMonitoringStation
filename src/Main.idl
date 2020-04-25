@@ -47,6 +47,7 @@ module ClientAndServer {
         void connectHQ();
         void deactivate_sensor(in string sensor_name);
         void activate_sensor(in string sensor_name);
+        void reset_sensor(in string sensor_name);
     };
 
     interface HeadQuarter{
@@ -60,5 +61,6 @@ module ClientAndServer {
         void return_connected_sensors(in string lms_name);
         void deactivate_sensor(in string lms_name, in string sensor_name);
         void activate_sensor(in string lms_name, in string sensor_name);
+        void reset_sensor(in string lms_name, in string sensor_name);
     };
 };

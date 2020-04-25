@@ -96,4 +96,10 @@ public class HeadQuarterServant extends HeadQuarterPOA {
         connectLMS(lms_name);
         server.activate_sensor(sensor_name);
     }
+
+    @Override
+    public void reset_sensor(String lms_name, String sensor_name) {
+        connectLMS(lms_name);
+        server.reset_sensor(sensor_name);
+    }
 }

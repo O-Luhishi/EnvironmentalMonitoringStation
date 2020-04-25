@@ -170,6 +170,18 @@ public class HeadQuarterUI extends JFrame {
 				}
 			});
 
+			JButton btnResetSensor = new JButton("Reset Sensor");
+			btnResetSensor.setBounds(205, 620, 150, 29);
+			frame.getContentPane().add(btnResetSensor);
+			btnResetSensor.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					String lms_name = JOptionPane.showInputDialog("Please Select Which Local Monitoring Station");
+					String sensor_name = JOptionPane.showInputDialog("Please Select Which Sensor To Reset");
+					reset_sensor(lms_name, sensor_name);
+				}
+			});
+
 		} catch (Exception e) {
 			System.out.println("ERROR : " + e) ;
 			e.printStackTrace(System.out);
@@ -191,6 +203,11 @@ public class HeadQuarterUI extends JFrame {
 	private void deactivate_sensor(String lms_name, String sensor_name){
 		headQuarter.deactivate_sensor(lms_name, sensor_name);
 	}
+
+	private void reset_sensor(String lms_name, String sensor_name){
+		headQuarter.reset_sensor(lms_name, sensor_name);
+	}
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {

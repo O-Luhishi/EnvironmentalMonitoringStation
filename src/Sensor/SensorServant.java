@@ -45,7 +45,6 @@ class SensorServant extends SensorPOA {
 
     @Override
     public void activate() {
-        SensorServer.txtStationName.setEditable(true);
         SensorServer.txtTime.setEditable(true);
         SensorServer.txtReadingValue.setEditable(true);
         SensorServer.txtDate.setEditable(true);
@@ -55,7 +54,6 @@ class SensorServant extends SensorPOA {
 
     @Override
     public void deactivate() {
-        SensorServer.txtStationName.setEditable(false);
         SensorServer.txtTime.setEditable(false);
         SensorServer.txtReadingValue.setEditable(false);
         SensorServer.txtDate.setEditable(false);
@@ -65,7 +63,6 @@ class SensorServant extends SensorPOA {
 
     @Override
     public void reset() {
-        SensorServer.txtStationName.setText("");
         SensorServer.txtTime.setText("");
         SensorServer.txtReadingValue.setText("");
         SensorServer.txtDate.setText("");
