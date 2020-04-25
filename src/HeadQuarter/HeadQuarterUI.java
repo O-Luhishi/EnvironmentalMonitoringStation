@@ -5,6 +5,8 @@ import org.omg.CORBA.ORB;
 import org.omg.PortableServer.*;
 import org.omg.PortableServer.POA;
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -90,7 +92,12 @@ public class HeadQuarterUI extends JFrame {
 			
 			lms_list = new JList();
 			lms_list.setModel(lmsList);
-			
+			lms_list.addListSelectionListener(new ListSelectionListener(){
+				@Override
+				public void valueChanged(ListSelectionEvent e) {
+					headQuarter.return_all_logs(lms_list.getSelectedValue().toString());
+				}
+			});
 			lms_ScrollPane = new JScrollPane(lms_list);
 			lms_ScrollPane.setBounds(26, 465, 200, 120);
 			frame.getContentPane().add(lms_ScrollPane);
@@ -128,21 +135,21 @@ public class HeadQuarterUI extends JFrame {
 			lms_logs_ScrollPane.setBounds(22, 279, 550, 132);
 			frame.getContentPane().add(lms_logs_ScrollPane);
 			
-			JButton btnActivateLms = new JButton("Activate LMS");
-			btnActivateLms.setBounds(22, 595, 117, 29);
-			frame.getContentPane().add(btnActivateLms);
-			btnActivateLms.addActionListener(new ActionListener() {
+			JButton btnActivateSensor = new JButton("Activate Sensor");
+			btnActivateSensor.setBounds(22, 595, 130, 29);
+			frame.getContentPane().add(btnActivateSensor);
+			btnActivateSensor.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					lms_name = JOptionPane.showInputDialog("Please Select Which Local Monitoring Station");
-					headQuarter.return_all_logs(lms_name);
+					String lms_name = JOptionPane.showInputDialog("Please Select Which Local Monitoring Station");
+					String sensor_name = JOptionPane.showInputDialog("Please Select Which Sensor To Power Off");
 				}
 			});
 			
-			JButton btnDeactivateLms = new JButton("Deactivate LMS");
-			btnDeactivateLms.setBounds(213, 595, 139, 29);
-			frame.getContentPane().add(btnDeactivateLms);
-			btnDeactivateLms.addActionListener(new ActionListener() {
+			JButton btnGetConnectedSensors = new JButton("Connected Sensors");
+			btnGetConnectedSensors.setBounds(213, 595, 150, 29);
+			frame.getContentPane().add(btnGetConnectedSensors);
+			btnGetConnectedSensors.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					lms_name = JOptionPane.showInputDialog("Please Select Which Local Monitoring Station");
